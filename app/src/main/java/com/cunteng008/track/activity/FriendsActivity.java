@@ -12,9 +12,12 @@ import android.widget.Toast;
 
 import com.cunteng008.track.R;
 import com.cunteng008.track.adapter.MyAdapter;
+import com.cunteng008.track.constant.Constant;
+import com.cunteng008.track.constant.FileName;
 import com.cunteng008.track.constant.MyAdapterConstant;
 import com.cunteng008.track.model.AddDialog;
 import com.cunteng008.track.model.PersonalInfo;
+import com.cunteng008.track.util.File;
 
 import java.util.ArrayList;
 
@@ -35,27 +38,31 @@ public class FriendsActivity extends AppCompatActivity {
     //开关
     private boolean mEditSwitch = false;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
-        for(int i = 0;i<10;i++){
-            PersonalInfo p = new PersonalInfo();
-            p.setName("Tom");
-            p.setNum("13143122980");
-            mFriendsList.add(p);
-
+        mFriendsList =
+                (ArrayList<PersonalInfo>) File.getObject(FileName.FRIEND,FriendsActivity.this);
+        if(mFriendsList != null){
+            mMyAdapter = new MyAdapter(FriendsActivity.this,mFriendsList,
+                    true, MyAdapterConstant.DEFAULT);
+            mFLv = (ListView) findViewById(R.id.f_lv);  /*定义一个动态数组*/
+            mFLv.setAdapter(mMyAdapter);
+        }else {
+            mFriendsList = new ArrayList<PersonalInfo>();
         }
-        mMyAdapter = new MyAdapter(FriendsActivity.this,mFriendsList,
-                true, MyAdapterConstant.DEFAULT);
-        mFLv = (ListView) findViewById(R.id.f_lv);  /*定义一个动态数组*/
-        mFLv.setAdapter(mMyAdapter);
 
         mEditBtn = (Button) findViewById(R.id.f_edit_btn);
         mEditBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                if(mFriendsList == null){
+                    return;
+                }
                 if(!mEditSwitch){
                     mEditSwitch = true;
                     mMyAdapter = new MyAdapter(FriendsActivity.this,mFriendsList,
@@ -85,8 +92,7 @@ public class FriendsActivity extends AppCompatActivity {
         mFRadarBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent i = new Intent(FriendsActivity.this,MainActivity.class);
-                startActivity(i);
+                File.saveObject(mFriendsList,FileName.FRIEND,FriendsActivity.this);
                 finish();
             }
         });
@@ -95,6 +101,7 @@ public class FriendsActivity extends AppCompatActivity {
         mFEnemiesBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                File.saveObject(mFriendsList,FileName.FRIEND,FriendsActivity.this);
                 Intent i = new Intent(FriendsActivity.this,EnemiesActivity.class);
                 startActivity(i);
                 finish();
@@ -120,8 +127,16 @@ public class FriendsActivity extends AppCompatActivity {
                 PersonalInfo p = new PersonalInfo();
                 p.setName(name);
                 p.setNum(num);
+                //若之前mFriendList == null，程序会崩溃，长度等于0不等于null
                 mFriendsList.add(p);
-                mMyAdapter.notifyDataSetChanged();
+                if(mFriendsList.size()==1){
+                    mMyAdapter = new MyAdapter(FriendsActivity.this,mFriendsList,
+                            true, MyAdapterConstant.DEFAULT);
+                    mFLv = (ListView) findViewById(R.id.f_lv);  /*定义一个动态数组*/
+                    mFLv.setAdapter(mMyAdapter);
+                }else {
+                    mMyAdapter.notifyDataSetChanged();
+                }
                 mAddDialog.dismiss();
             }
         });

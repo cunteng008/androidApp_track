@@ -1,13 +1,9 @@
 package com.cunteng008.track.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
-import android.telephony.SmsMessage;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -21,15 +17,20 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.cunteng008.track.R;
-import com.cunteng008.track.MessageReceiver;
+import com.cunteng008.track.constant.Constant;
+import com.cunteng008.track.constant.FileName;
+import com.cunteng008.track.model.PersonalInfo;
+import com.cunteng008.track.util.File;
 
 import java.util.ArrayList;
 
@@ -45,14 +46,15 @@ public class MainActivity extends AppCompatActivity {
     //百度地图
     private MapView mMapView;
     private BaiduMap mBaiduMap;
-    BDLocation mLocation;
-
-    private boolean mIsFirstLoc = true; // 是否首次定位
-    double temp = 0;
 
     //布局中的控件
     Button mRefurbishButton;
     Button mFriendsButton;
+
+    //数据
+    private ArrayList<PersonalInfo> mInfoList = new ArrayList<>();
+    //我的位置
+    public static BDLocation mMyLocation = new BDLocation();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,17 +67,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Toast.makeText(MainActivity.this,"刷新",Toast.LENGTH_SHORT).show();
-                setMark();
 
-                    String phone ="10010";
-                    String context = "where are you?";
+                //setMark();
+
+                mInfoList = new ArrayList<>();
+                //可以避免null影响
+                mInfoList.addAll((ArrayList<PersonalInfo>) File.getObject(FileName.FRIEND,MainActivity.this));
+                addOverlay(mInfoList);
+                    String phone ="13360787823";
+                    //String content = "where are you?";
+                String content = Constant.MASSAGE_HEAD +  mMyLocation.getLongitude()
+                        + "/" +mMyLocation.getLatitude();
                     SmsManager manager = SmsManager.getDefault();
                 //因为一条短信有字数限制，因此要将长短信拆分
-                    ArrayList<String> list = manager.divideMessage(context);
+                    ArrayList<String> list = manager.divideMessage(content);
                     for(String text:list){
                         manager.sendTextMessage(phone, null, text, null, null);
                     }
-
             }
         });
 
@@ -84,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent mIntent = new Intent(MainActivity.this,FriendsActivity.class);
-                startActivityForResult(mIntent,2);
-                finish();
+                startActivity(mIntent);
             }
         });
 
@@ -140,27 +147,63 @@ public class MainActivity extends AppCompatActivity {
                 //设置我始终位于中心
                 LatLng ll = new LatLng(location.getLatitude(),
                         location.getLongitude());
-                mLocation = location;
+                mMyLocation = location;
                 MapStatus.Builder builder = new MapStatus.Builder();
                 //图层设置为当前值
                 builder.target(ll).zoom(mBaiduMap.getMapStatus().zoom);
-                mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-                mIsFirstLoc = false;
+               mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
         }
         public void onReceivePoi(BDLocation poiLocation) {
         }
     }
 
+    /*
     private void setMark(){
+        double temp = 0;
+        mInfoList = new ArrayList<>();
+        mInfoList.addAll((ArrayList<PersonalInfo>) File.getObject(FileName.FRIEND,MainActivity.this));
+
         //先删除所有标志
         //mBaiduMap.clear();
+        for(int i=0;i<mInfoList.size();i++){
+            LatLng point = new LatLng(mInfoList.get(i).getLatitude(),
+                    mInfoList.get(i).getLongitude());
+            BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.friend_marka);
+            OverlayOptions option = new MarkerOptions().position(point).icon(bitmap);
+            mBaiduMap.addOverlay(option);
+        }
+    }  */
 
-        LatLng point = new LatLng(mLocation.getLatitude()+temp,
-                    mLocation.getLongitude()+temp);
+
+    //显示marker
+    private void addOverlay(ArrayList<PersonalInfo> personalInfos) {
+        //清空地图
+        //mBaiduMap.clear();
+        //创建marker的显示图标
         BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.friend_marka);
-        OverlayOptions option = new MarkerOptions().position(point).icon(bitmap);
-        mBaiduMap.addOverlay(option);
-        temp = temp+0.001;
+        LatLng latLng = null;
+        Marker marker;
+        OverlayOptions options;
+        for(PersonalInfo info:personalInfos){
+            //获取经纬度
+            latLng = new LatLng(info.getLatitude(),info.getLongitude());
+            //设置marker
+            options = new MarkerOptions()
+                    .position(latLng)//设置位置
+                    .icon(bitmap)//设置图标样式
+                    .zIndex(17) // 设置marker所在层级
+                    .draggable(true); // 设置手势拖拽;
+            //添加marker
+            marker = (Marker) mBaiduMap.addOverlay(options);
+            //使用marker携带info信息，当点击事件的时候可以通过marker获得info信息
+            Bundle bundle = new Bundle();
+            //info必须实现序列化接口
+            bundle.putSerializable("info", info);
+            marker.setExtraInfo(bundle);
+        }
+        //将地图显示在最后一个marker的位置
+        MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
+        mBaiduMap.setMapStatus(msu);
     }
 
     @Override
@@ -185,4 +228,5 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         //unregisterReceiver(mMessageReceiver);
     }
+
 }

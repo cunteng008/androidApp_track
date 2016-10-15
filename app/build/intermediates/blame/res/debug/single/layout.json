@@ -136,12 +136,12 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_bar_up_container.xml"
     },
     {
-        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_select_dialog_material.xml",
-        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_select_dialog_material.xml"
-    },
-    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\main_title.xml",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\layout\\main_title.xml"
+    },
+    {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_select_dialog_material.xml",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_select_dialog_material.xml"
     },
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_time.xml",

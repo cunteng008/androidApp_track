@@ -11,6 +11,7 @@ public class PersonalInfo implements Serializable {
     private String mName;
     private double mLatitude;
     private double mLongitude;
+    private boolean mIsFriend;
 
     public String getNum() {
         return mNum;
@@ -42,5 +43,13 @@ public class PersonalInfo implements Serializable {
 
     public void setLongitude(double longitude) {
         mLongitude = longitude;
+    }
+
+    public boolean isFriend() {
+        return mIsFriend;
+    }
+
+    public void setIsFriend(boolean isFriend) {
+        mIsFriend = isFriend;
     }
 }
