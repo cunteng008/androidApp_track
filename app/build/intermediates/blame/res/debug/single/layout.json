@@ -16,8 +16,20 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_popup_menu_header_item_layout.xml"
     },
     {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_friends.xml",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\layout\\activity_friends.xml"
+    },
+    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_layout.xml",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_menu_layout.xml"
+    },
+    {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\p_list_item.xml",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\layout\\p_list_item.xml"
+    },
+    {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_add.xml",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\layout\\dialog_add.xml"
     },
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_icon.xml",
@@ -84,6 +96,10 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\select_dialog_item_material.xml"
     },
     {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_detail.xml",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\layout\\dialog_detail.xml"
+    },
+    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_media_action.xml",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_media_action.xml"
     },
@@ -124,6 +140,10 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_select_dialog_material.xml"
     },
     {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\main_title.xml",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\layout\\main_title.xml"
+    },
+    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_time.xml",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_template_part_time.xml"
     },
@@ -132,12 +152,20 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_screen_content_include.xml"
     },
     {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_enemies.xml",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\layout\\activity_enemies.xml"
+    },
+    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_title_item.xml",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_bar_title_item.xml"
     },
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_view_list_nav_layout.xml",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
+    },
+    {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_delete.xml",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\layout\\dialog_delete.xml"
     },
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_view.xml",

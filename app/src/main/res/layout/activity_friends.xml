@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--朋友页面的控件名前缀为 f -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_friends"
+    android:background="#222222"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#21ac37"
+        android:layout_alignParentTop="true">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <Button
+                android:id = "@+id/add_friend_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/add"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textColor="#e5e3e4"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="FRIENDS"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <Button
+                android:id = "@+id/f_edit_btn"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:background="#1c8a33"
+                android:textColor="#fffffd"
+                android:textSize="20sp"
+                android:text="Edit"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/f_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#414040"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="60dp"
+        android:dividerHeight="3dp"
+        android:listSelector="@android:color/transparent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="#4b504c">
+        <Button
+            android:id = "@+id/f_radar_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#848484"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="RADAR"/>
+        <Button
+            android:id = "@+id/f_enemies_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#ec333b"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="ENEMIES"/>
+    </LinearLayout>
+</RelativeLayout>
