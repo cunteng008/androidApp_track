@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cunteng008.track.R;
@@ -21,6 +22,7 @@ public class DeleteDialog extends Dialog {
     private TextView mTextNum;
     private Button mOKBtn, mNOBtn;
     private TextView mTitle;
+    private ImageView mDeleteIcon;
 
     public DeleteDialog(Context context) {
         super(context, R.style.DeleteDialog);
@@ -39,6 +41,7 @@ public class DeleteDialog extends Dialog {
         mTextNum = (TextView) mView.findViewById(R.id.delete_num);
         mOKBtn = (Button) mView.findViewById(R.id.delete_OK_btn);
         mNOBtn = (Button) mView.findViewById(R.id.delete_NO_btn);
+        mDeleteIcon = (ImageView) mView.findViewById(R.id.delete_icon) ;
         super.setContentView(mView);
     }
 
@@ -50,6 +53,9 @@ public class DeleteDialog extends Dialog {
     }
     public View getTitle(){
         return mTitle;
+    }
+    public View getDeleteIcon() {
+        return mDeleteIcon;
     }
 
     @Override

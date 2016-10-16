@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:text="ADD FRIEND"/>
 
@@ -17,9 +18,10 @@
         android:layout_height="50dp"
         android:gravity="center">
         <ImageView
+            android:id="@+id/add_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/friend_marka"/>
+            android:src="@drawable/friend_icon"/>
     </LinearLayout>
 
     <LinearLayout
@@ -34,12 +36,14 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3">
+            android:layout_weight="3"
+            android:weightSum="1">
 
             <EditText
                 android:id = "@+id/add_name"
-                android:layout_width="250dp"
-                android:layout_height="match_parent"/>
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -58,19 +62,23 @@
             android:layout_weight="3">
             <EditText
                 android:id = "@+id/add_num"
-                android:layout_width="250dp"
+                android:layout_width="200dp"
+                android:layout_marginRight="10dp"
+                android:phoneNumber="true"
                 android:layout_height="match_parent"/>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="60dp"
+        android:gravity="center_horizontal">
         <Button
             android:id = "@+id/add_OK_btn"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:text="OK"/>
+            android:text="OK"
+            android:layout_marginRight="50dp"/>
         <Button
             android:id = "@+id/add_NO_btn"
             android:layout_width="100dp"

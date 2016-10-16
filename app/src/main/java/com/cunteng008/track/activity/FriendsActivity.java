@@ -23,10 +23,8 @@ import java.util.ArrayList;
 
 public class FriendsActivity extends AppCompatActivity {
 
-    private ArrayList<PersonalInfo> mFriendsList = new ArrayList<PersonalInfo>();
     private MyAdapter mMyAdapter;
     private ListView mFLv;
-    private int mFLvPosition = 0;
 
     //控件
     private Button mFRadarBtn;
@@ -38,41 +36,30 @@ public class FriendsActivity extends AppCompatActivity {
     //开关
     private boolean mEditSwitch = false;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
-        mFriendsList =
-                (ArrayList<PersonalInfo>) File.getObject(FileName.FRIEND,FriendsActivity.this);
-        if(mFriendsList != null){
-            mMyAdapter = new MyAdapter(FriendsActivity.this,mFriendsList,
-                    true, MyAdapterConstant.DEFAULT);
-            mFLv = (ListView) findViewById(R.id.f_lv);  /*定义一个动态数组*/
-            mFLv.setAdapter(mMyAdapter);
-        }else {
-            mFriendsList = new ArrayList<PersonalInfo>();
-        }
+        init();
 
         mEditBtn = (Button) findViewById(R.id.f_edit_btn);
         mEditBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(mFriendsList == null){
+                if(MainActivity.mFriendInfoList == null){
                     return;
                 }
                 if(!mEditSwitch){
                     mEditSwitch = true;
-                    mMyAdapter = new MyAdapter(FriendsActivity.this,mFriendsList,
+                    mMyAdapter = new MyAdapter(FriendsActivity.this,MainActivity.mFriendInfoList,
                             true, MyAdapterConstant.EDIT);
                     mFLv = (ListView) findViewById(R.id.f_lv);  /*定义一个动态数组*/
                     mFLv.setAdapter(mMyAdapter);
                 }
                 else {
                     mEditSwitch = false;
-                    mMyAdapter = new MyAdapter(FriendsActivity.this,mFriendsList,
+                    mMyAdapter = new MyAdapter(FriendsActivity.this,MainActivity.mFriendInfoList,
                             true, MyAdapterConstant.DEFAULT);
                     mFLv = (ListView) findViewById(R.id.f_lv);  /*定义一个动态数组*/
                     mFLv.setAdapter(mMyAdapter);
@@ -92,24 +79,27 @@ public class FriendsActivity extends AppCompatActivity {
         mFRadarBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                File.saveObject(mFriendsList,FileName.FRIEND,FriendsActivity.this);
                 finish();
             }
         });
 
-        mFEnemiesBtn = (Button) findViewById(R.id.f_enemies_button);
+        mFEnemiesBtn = (Button) findViewById(R.id.f_enemies_btn);
         mFEnemiesBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                File.saveObject(mFriendsList,FileName.FRIEND,FriendsActivity.this);
                 Intent i = new Intent(FriendsActivity.this,EnemiesActivity.class);
                 startActivity(i);
                 finish();
             }
         });
-
     }
 
+     private void init(){
+         mMyAdapter = new MyAdapter(FriendsActivity.this,MainActivity.mFriendInfoList,
+                     true, MyAdapterConstant.DEFAULT);
+         mFLv = (ListView) findViewById(R.id.f_lv);  /*定义一个动态数组*/
+         mFLv.setAdapter(mMyAdapter);
+     }
     // 弹窗
     private void addDialog() {
         mAddDialog = new AddDialog(FriendsActivity.this);
@@ -127,16 +117,11 @@ public class FriendsActivity extends AppCompatActivity {
                 PersonalInfo p = new PersonalInfo();
                 p.setName(name);
                 p.setNum(num);
+                p.setLatitude(MainActivity.mMyLocation.getLatitude());
+                p.setLongitude(MainActivity.mMyLocation.getLongitude());
                 //若之前mFriendList == null，程序会崩溃，长度等于0不等于null
-                mFriendsList.add(p);
-                if(mFriendsList.size()==1){
-                    mMyAdapter = new MyAdapter(FriendsActivity.this,mFriendsList,
-                            true, MyAdapterConstant.DEFAULT);
-                    mFLv = (ListView) findViewById(R.id.f_lv);  /*定义一个动态数组*/
-                    mFLv.setAdapter(mMyAdapter);
-                }else {
-                    mMyAdapter.notifyDataSetChanged();
-                }
+                MainActivity.mFriendInfoList.add(p);
+                mMyAdapter.notifyDataSetChanged();
                 mAddDialog.dismiss();
             }
         });

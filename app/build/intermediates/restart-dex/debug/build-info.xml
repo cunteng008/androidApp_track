@@ -1,43 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <instant-run
-    api-level="22"
-    density="xxhdpi"
+    api-level="18"
+    density="hdpi"
     format="8"
     plugin-version="2.2.0"
-    timestamp="30107532059667"
+    timestamp="61814727745672"
     token="2982956050992751720"
-    verifier="COLD_SWAP_REQUESTED" >
+    verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
-        duration="156" />
+        duration="430" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="11" />
+        duration="51" />
     <task
         name="verifier"
-        duration="3" />
+        duration="46" />
 
     <artifact
-        location="D:\Mingjing\Android\project2\track\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_8\classes.dex"
-        type="DEX" />
+        location="D:\Mingjing\Android\project2\track\app\build\outputs\apk\app-debug.apk"
+        type="MAIN" />
 
     <build
-        timestamp="29319534303564"
+        timestamp="61814727745672"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="D:\Mingjing\Android\project2\track\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
-    </build>
-    <build
-        timestamp="30107532059667"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="D:\Mingjing\Android\project2\track\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_8\classes.dex"
-            type="DEX" />
     </build>
 
 </instant-run>

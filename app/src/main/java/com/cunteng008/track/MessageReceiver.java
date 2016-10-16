@@ -36,29 +36,32 @@ public class MessageReceiver extends BroadcastReceiver {
             fullMessage += message.getMessageBody();  //获取短信内容
         }
 
-        //读取文件的数据
-        ArrayList<PersonalInfo> infoList = new ArrayList<>();
-        infoList =(ArrayList<PersonalInfo>) File.getObject(FileName.FRIEND,context);
-        if (infoList == null){
-            infoList = new ArrayList<>();
-        }
-
         //若收到where are you,则执行
         int i = 0;
-        if(fullMessage.equals("where are you?")){
-            for(;i<infoList.size();i++){
-                if(infoList.get(i).getNum().equals(address)){
+        if(fullMessage.equals(Constant.ASK_LOCATION)){
+            //在敌人和朋友的号码中查找
+            for(;i<MainActivity.mFriendInfoList.size();i++){
+                if(MainActivity.mFriendInfoList.get(i).getNum().equals(address)){
                    break;
                 }
             }
-            if(i == infoList.size()){
-                return;
+            if(i == MainActivity.mFriendInfoList.size()){
+                int k = 0;
+                for(;k<MainActivity.mEnemyInfoList.size();k++){
+                    if(MainActivity.mEnemyInfoList.get(k).getNum().equals(address)){
+                        break;
+                    }
+                    if(k == MainActivity.mEnemyInfoList.size()){
+                        return;
+                    }
+                }
             }
+
             Intent mIntent = new Intent(context,MainActivity.class);
             String phone =address;
             //Constant.TEXT_Head用来标识短信的内容为指定应用发出的位置信息
             //String.format会出现异常，导致程序立即正常退出
-            String myLocation = Constant.MASSAGE_HEAD +  MainActivity.mMyLocation.getLongitude()
+            String myLocation =  MainActivity.mMyLocation.getLongitude()
                     + "/" +MainActivity.mMyLocation.getLatitude();
             SmsManager manager = SmsManager.getDefault();
             //因为一条短信有字数限制，因此要将长短信拆分
@@ -69,6 +72,7 @@ public class MessageReceiver extends BroadcastReceiver {
             return;
         }
 
+        /*
         int loc;
         if((loc = fullMessage.indexOf(":"))< 0){
             return;
@@ -77,12 +81,12 @@ public class MessageReceiver extends BroadcastReceiver {
         String head = fullMessage.substring(0,loc+1);
         if(!head.equals(Constant.MASSAGE_HEAD)){
             return;
-        }
+        } */
 
         //将信息头去掉
-        fullMessage = fullMessage.replace(Constant.MASSAGE_HEAD,"");
+        //fullMessage = fullMessage.replace(Constant.MASSAGE_HEAD,"");
         int j=0;
-        for(PersonalInfo info:infoList){
+        for(PersonalInfo info:MainActivity.mFriendInfoList){
             if(info.getNum().equals(address)){
                 //若收到经纬度，则执行
                 String[] strOfLocation = analyzeReceivedMassage(fullMessage);
@@ -96,15 +100,35 @@ public class MessageReceiver extends BroadcastReceiver {
                 }
                 info.setLatitude(lat);
                 info.setLongitude(lon);
-                infoList.set(j,info);
-                File.saveObject(infoList,FileName.FRIEND,context);
+                MainActivity.mFriendInfoList.set(j,info);
+                return;
+            }
+            j++;
+        }
+
+        j=0;
+        for(PersonalInfo info:MainActivity.mEnemyInfoList){
+            if(info.getNum().equals(address)){
+                //若收到经纬度，则执行
+                String[] strOfLocation = analyzeReceivedMassage(fullMessage);
+                double lon;
+                double lat;
+                try {
+                    lon = Double.parseDouble(strOfLocation[0]);
+                    lat = Double.parseDouble(strOfLocation[1]);
+                }catch (Exception e){
+                    return;
+                }
+                info.setLatitude(lat);
+                info.setLongitude(lon);
+                MainActivity.mEnemyInfoList.set(j,info);
                 return;
             }
             j++;
         }
     }
 
-    //解析短信
+    //解析短信,返回lon，lat两个字符串
     String[] analyzeReceivedMassage(String text){
         String temp = text ;
         //取得斜杠的位置

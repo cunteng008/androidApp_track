@@ -46,13 +46,16 @@ public class MainActivity extends AppCompatActivity {
     //百度地图
     private MapView mMapView;
     private BaiduMap mBaiduMap;
+    private boolean mIsFirstLoc = true;
 
     //布局中的控件
     Button mRefurbishButton;
     Button mFriendsButton;
+    Button mEenemiesButton;
 
     //数据
-    private ArrayList<PersonalInfo> mInfoList = new ArrayList<>();
+   public static ArrayList<PersonalInfo> mFriendInfoList = new ArrayList<>();
+   public static ArrayList<PersonalInfo> mEnemyInfoList = new ArrayList<>();
     //我的位置
     public static BDLocation mMyLocation = new BDLocation();
 
@@ -68,22 +71,24 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 Toast.makeText(MainActivity.this,"刷新",Toast.LENGTH_SHORT).show();
 
-                //setMark();
+             addOverlay(mFriendInfoList,mEnemyInfoList);
 
-                mInfoList = new ArrayList<>();
-                //可以避免null影响
-                mInfoList.addAll((ArrayList<PersonalInfo>) File.getObject(FileName.FRIEND,MainActivity.this));
-                addOverlay(mInfoList);
-                    String phone ="13360787823";
-                    //String content = "where are you?";
-                String content = Constant.MASSAGE_HEAD +  mMyLocation.getLongitude()
-                        + "/" +mMyLocation.getLatitude();
+                for(PersonalInfo info:mFriendInfoList){
+                    String phone =info.getNum();
                     SmsManager manager = SmsManager.getDefault();
-                //因为一条短信有字数限制，因此要将长短信拆分
-                    ArrayList<String> list = manager.divideMessage(content);
+                    //因为一条短信有字数限制，因此要将长短信拆分
+                    ArrayList<String> list = manager.divideMessage(Constant.ASK_LOCATION);
                     for(String text:list){
                         manager.sendTextMessage(phone, null, text, null, null);
                     }
+                }
+                //因为收到短信需要时间
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                addOverlay(mFriendInfoList,mEnemyInfoList);
             }
         });
 
@@ -96,6 +101,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mEenemiesButton = (Button) findViewById(R.id.m_enemies_btn);
+        mEenemiesButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent mIntent = new Intent(MainActivity.this,EnemiesActivity.class);
+                startActivity(mIntent);
+            }
+        });
+
         init();
         mLocClient.registerLocationListener(myListener);
         mLocClient.start();
@@ -103,6 +117,18 @@ public class MainActivity extends AppCompatActivity {
 
     //定位的相关设置
     private void init(){
+
+        //读取数据
+        //可以避免null影响
+       if( File.getObject(FileName.FRIEND,MainActivity.this)!=null){
+          mFriendInfoList =
+                  (ArrayList<PersonalInfo>) File.getObject(FileName.FRIEND,MainActivity.this);
+        }
+        if( File.getObject(FileName.ENEMY,MainActivity.this)!=null){
+            mEnemyInfoList =
+                    (ArrayList<PersonalInfo>) File.getObject(FileName.ENEMY,MainActivity.this);
+        }
+
         mMapView = (MapView) findViewById(R.id.bmapView);
         mBaiduMap = mMapView.getMap();
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
@@ -126,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
         option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
 
         mLocClient.setLocOption(option);
+
     }
 
     //定位SDK监听函数
@@ -152,39 +179,45 @@ public class MainActivity extends AppCompatActivity {
                 //图层设置为当前值
                 builder.target(ll).zoom(mBaiduMap.getMapStatus().zoom);
                mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+            if(mIsFirstLoc){
+                addOverlay(mFriendInfoList,mEnemyInfoList);
+                mIsFirstLoc = false;
+            }
         }
         public void onReceivePoi(BDLocation poiLocation) {
         }
     }
 
-    /*
-    private void setMark(){
-        double temp = 0;
-        mInfoList = new ArrayList<>();
-        mInfoList.addAll((ArrayList<PersonalInfo>) File.getObject(FileName.FRIEND,MainActivity.this));
-
-        //先删除所有标志
-        //mBaiduMap.clear();
-        for(int i=0;i<mInfoList.size();i++){
-            LatLng point = new LatLng(mInfoList.get(i).getLatitude(),
-                    mInfoList.get(i).getLongitude());
-            BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.friend_marka);
-            OverlayOptions option = new MarkerOptions().position(point).icon(bitmap);
-            mBaiduMap.addOverlay(option);
-        }
-    }  */
-
-
     //显示marker
-    private void addOverlay(ArrayList<PersonalInfo> personalInfos) {
+    private void addOverlay(ArrayList<PersonalInfo> friendInfoList,
+                            ArrayList<PersonalInfo> enemyInfoList) {
         //清空地图
-        //mBaiduMap.clear();
+        mBaiduMap.clear();
         //创建marker的显示图标
-        BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.friend_marka);
+        BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.friend_icon);
         LatLng latLng = null;
         Marker marker;
         OverlayOptions options;
-        for(PersonalInfo info:personalInfos){
+        for(PersonalInfo info:friendInfoList){
+            //获取经纬度
+            latLng = new LatLng(info.getLatitude()+0.1,info.getLongitude()+0.1);
+            //设置marker
+            options = new MarkerOptions()
+                    .position(latLng)//设置位置
+                    .icon(bitmap)//设置图标样式
+                    .zIndex(17) // 设置marker所在层级
+                    .draggable(true); // 设置手势拖拽;
+            //添加marker
+            marker = (Marker) mBaiduMap.addOverlay(options);
+            //使用marker携带info信息，当点击事件的时候可以通过marker获得info信息
+            Bundle bundle = new Bundle();
+            //info必须实现序列化接口
+            bundle.putSerializable("info", info);
+            marker.setExtraInfo(bundle);
+        }
+        //创建marker的显示图标
+       bitmap = BitmapDescriptorFactory.fromResource(R.drawable.enemy_icon);
+        for(PersonalInfo info:enemyInfoList){
             //获取经纬度
             latLng = new LatLng(info.getLatitude(),info.getLongitude());
             //设置marker
@@ -206,6 +239,35 @@ public class MainActivity extends AppCompatActivity {
         mBaiduMap.setMapStatus(msu);
     }
 
+   //计算两点之间距离
+   // @param start
+   // @param end
+   // @return 米
+    public String getDistance(BDLocation start,BDLocation end){
+        double lat1 = (Math.PI/180)*start.getLatitude();
+        double lat2 = (Math.PI/180)*end.getLatitude();
+
+        double lon1 = (Math.PI/180)*start.getLongitude();
+        double lon2 = (Math.PI/180)*end.getLongitude();
+
+        //地球半径
+        double R = 6371;
+
+        //两点间距离 km，如果想要米的话，结果*1000
+        double d =  Math.acos(Math.sin(lat1)*Math.sin(lat2)+Math.cos(lat1)*Math.cos(lat2)*Math.cos(lon2-lon1))*R;
+        if(d<1)
+            return (int)d*1000+"m";
+        else
+            return String.format("%.2f",d)+"km";
+    }
+
+    @Override
+    protected void onStop(){
+        //清理内存前将数据储存
+        File.saveObject(mFriendInfoList,FileName.FRIEND,MainActivity.this);
+        File.saveObject(mEnemyInfoList,FileName.ENEMY,MainActivity.this);
+        super.onStop();
+    }
     @Override
     protected void onPause() {
         mMapView.onPause();
@@ -220,13 +282,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        //销毁前将数据储存
+        File.saveObject(mFriendInfoList,FileName.FRIEND,MainActivity.this);
+        File.saveObject(mEnemyInfoList,FileName.ENEMY,MainActivity.this);
         // 退出时销毁定位
         mLocClient.stop();
         // 关闭定位图层
         mBaiduMap.setMyLocationEnabled(false);
         mMapView.onDestroy();
         super.onDestroy();
-        //unregisterReceiver(mMessageReceiver);
     }
-
 }

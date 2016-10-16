@@ -22,7 +22,7 @@
             android:id = "@+id/detail_pos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(Latitude,Longitude):"/>
+            android:text="Latitude/Longitude:"/>
         <TextView
             android:id="@+id/detail_altitude"
             android:layout_width="wrap_content"

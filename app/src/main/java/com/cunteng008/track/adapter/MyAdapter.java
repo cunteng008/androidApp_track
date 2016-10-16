@@ -1,6 +1,7 @@
 package com.cunteng008.track.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,6 +14,8 @@ import com.cunteng008.track.model.DetailDialog;
 import com.cunteng008.track.model.PersonalInfo;
 
 import java.util.ArrayList;
+
+import static com.cunteng008.track.R.drawable.enemy_delete_icon;
 
 public class MyAdapter extends BaseAdapter {
 
@@ -98,10 +101,9 @@ public class MyAdapter extends BaseAdapter {
         }
         switch (type)
         {
-
             case TYPE_Friend:
                 PersonalInfo fp = mInfoList.get(position);
-                Holder.mark.setImageResource(R.drawable.friend_marka);
+                Holder.mark.setImageResource(R.drawable.friend_icon);
                 Holder.content.setText(fp.getName()+" "+fp.getNum());
                 if(mDoWhat.equals("edit")){
                     Holder.deleteImg.setImageResource(R.drawable.delete);
@@ -119,13 +121,43 @@ public class MyAdapter extends BaseAdapter {
                            detailDialog(position);
                         }
                     });
+                    Holder.mark.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v){
+                            detailDialog(position);
+                        }
+                    });
                 }
                 break;
             case TYPE_Enemy:
                 PersonalInfo ep = mInfoList.get(position);
-                Holder.mark.setImageResource(R.drawable.enemy_marka);
+                Holder.mark.setImageResource(R.drawable.enemy_icon);
                 Holder.content.setText(ep.getName()+" "+ep.getNum());
-                Holder.deleteImg.setImageResource(R.drawable.delete);
+                Holder.content.setTextColor(Color.rgb(236, 50, 57));
+                if(mDoWhat.equals("edit")){
+                    Holder.deleteImg.setImageResource(R.drawable.delete);
+                    Holder.deleteImg.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v){
+                            deleteDialog(position);
+                        }
+                    });
+
+                }
+                else{
+                    Holder.content.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v){
+                            detailDialog(position);
+                        }
+                    });
+                    Holder.mark.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v){
+                            detailDialog(position);
+                        }
+                    });
+                }
                 break;
         }
         return convertView;
@@ -144,11 +176,13 @@ public class MyAdapter extends BaseAdapter {
         final TextView textName = (TextView) mDeleteDialog.getTextName();
         final TextView textNum = (TextView)  mDeleteDialog.getTextNum();
         final TextView title = (TextView) mDeleteDialog.getTitle();
+        final  ImageView deleteIcon = (ImageView) mDeleteDialog.getDeleteIcon();
         if(mIsFriend){
             title.setText("DELETE FRIEND");
         }
         else {
             title.setText("DELETE ENEMY");
+            deleteIcon.setImageResource(enemy_delete_icon);
         }
         textName.setText(mInfoList.get(pos).getName());
         textNum.setText(mInfoList.get(pos).getNum());
@@ -175,9 +209,12 @@ public class MyAdapter extends BaseAdapter {
         detailDialog = new DetailDialog(mContext);
         final TextView textName = (TextView) detailDialog.getTextName();
         final TextView textNum = (TextView)  detailDialog.getTextNum();
+        final TextView textPos = (TextView) detailDialog.getTextPositon();
 
         textName.setText("Name:"+"\n"+mInfoList.get(pos).getName());
         textNum.setText("Number:"+"\n"+mInfoList.get(pos).getNum());
+       textPos.setText("Latitude/Longitude:" +"\n"+mInfoList.get(pos).getLatitude()+"N"
+               +"/" +mInfoList.get(pos).getLongitude()+"E");
         detailDialog.setOnOKListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,6 +227,7 @@ public class MyAdapter extends BaseAdapter {
                 detailDialog.dismiss();
             }
         });
+
         detailDialog.show();
     }
 }

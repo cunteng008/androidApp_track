@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cunteng008.track.R;
@@ -18,6 +19,7 @@ import com.cunteng008.track.R;
 public class AddDialog extends Dialog {
     private EditText mEditName;
     private EditText mEditNum;
+    private ImageView mAddIcon;
     private Button mOKBtn, mNOBtn;
     private TextView mTitle;
 
@@ -36,6 +38,7 @@ public class AddDialog extends Dialog {
         mTitle = (TextView) mView.findViewById(R.id.add_title);
         mEditName = (EditText) mView.findViewById(R.id.add_name);
         mEditNum = (EditText) mView.findViewById(R.id.add_num);
+        mAddIcon = (ImageView) mView.findViewById(R.id.add_icon);
         mOKBtn = (Button) mView.findViewById(R.id.add_OK_btn);
         mNOBtn = (Button) mView.findViewById(R.id.add_NO_btn);
         super.setContentView(mView);
@@ -46,6 +49,12 @@ public class AddDialog extends Dialog {
     }
     public View getEditNum(){
         return mEditNum;
+    }
+    public View getAddIcon() {
+        return mAddIcon;
+    }
+    public TextView getTitle() {
+        return mTitle;
     }
 
     @Override

@@ -3,13 +3,13 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_friends"
-    android:background="#222222"
+    android:background="@drawable/view_bg0"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#21ac37"
+        android:background="#ed383f"
         android:layout_alignParentTop="true">
         <LinearLayout
             android:layout_width="0dp"
@@ -17,9 +17,10 @@
             android:layout_weight="1"
             android:gravity="center">
             <Button
+                android:id="@+id/add_enemy_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/add"/>
+                android:background="@drawable/add_enemy"/>
         </LinearLayout>
 
         <TextView
@@ -37,9 +38,10 @@
             android:layout_weight="1"
             android:gravity="center">
             <Button
+                android:id="@+id/e_edit_btn"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
-                android:background="#1c8a33"
+                android:background="@drawable/enemy_edit_button_bg"
                 android:textColor="#fffffd"
                 android:textSize="20sp"
                 android:text="Edit"/>
@@ -47,15 +49,13 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/m_lv"
+        android:id="@+id/e_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#414040"
         android:layout_marginBottom="60dp"
         android:layout_marginTop="60dp"
         android:dividerHeight="3dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
         android:listSelector="@android:color/transparent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -67,7 +67,7 @@
         android:layout_alignParentBottom="true"
         android:background="#4b504c">
         <Button
-            android:id = "@+id/m_radar_btn"
+            android:id = "@+id/e_radar_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -76,7 +76,7 @@
             android:textStyle="bold"
             android:text="RADAR"/>
         <Button
-            android:id = "@+id/m_friends_btn"
+            android:id = "@+id/e_friends_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

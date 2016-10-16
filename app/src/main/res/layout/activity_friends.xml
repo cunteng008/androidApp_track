@@ -3,7 +3,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_friends"
-    android:background="#222222"
+    android:background="@drawable/view_bg0"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
@@ -20,7 +20,7 @@
                 android:id = "@+id/add_friend_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/add"/>
+                android:background="@drawable/add_friend"/>
         </LinearLayout>
 
         <TextView
@@ -41,7 +41,7 @@
                 android:id = "@+id/f_edit_btn"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
-                android:background="#1c8a33"
+                android:background="@drawable/friend_edit_button_bg"
                 android:textColor="#fffffd"
                 android:textSize="20sp"
                 android:text="Edit"/>
@@ -76,7 +76,7 @@
             android:textStyle="bold"
             android:text="RADAR"/>
         <Button
-            android:id = "@+id/f_enemies_button"
+            android:id = "@+id/f_enemies_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -6,7 +6,7 @@
     <Button
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/add"/>
+        android:background="@drawable/add_friend"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -19,9 +19,10 @@
         android:layout_height="50dp"
         android:gravity="center">
         <ImageView
+            android:id="@+id/delete_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/friend_marka"/>
+            android:src="@drawable/friend_icon"/>
     </LinearLayout>
 
     <LinearLayout

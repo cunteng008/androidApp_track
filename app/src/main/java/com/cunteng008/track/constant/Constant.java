@@ -7,5 +7,6 @@ import java.util.ArrayList;
  */
 
 public class Constant {
-    public static String MASSAGE_HEAD = "@$MyLocation:";
+    public static String MASSAGE_HEAD = "@MyLocation:";
+    public final static String ASK_LOCATION = "where are you?";
 }
