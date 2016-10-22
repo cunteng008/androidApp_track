@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.cunteng008.track">
-    
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -12,9 +12,11 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.READ_LOGS"/>
-    <!--发送短信权限-->
+    <!-- 发送短信权限 -->
     <uses-permission android:name="android.permission.SEND_SMS"/>
-    <!-- 接收短信权限  android4.3不能申请-->
+    <!-- 发送短信权限 -->
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <!-- 接收短信权限  android4.3不能申请 -->
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
 
     <application
@@ -23,7 +25,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <receiver android:name=".MessageReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
@@ -42,7 +43,6 @@
         </service>
 
         <activity android:name=".activity.MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -52,6 +52,10 @@
         <activity android:name=".activity.FriendsActivity">
         </activity>
         <activity android:name=".activity.EnemiesActivity">
+        </activity>
+        <activity android:name=".activity.FriendDetailActivity">
+        </activity>
+        <activity android:name=".activity.EnemyDetailActivity">
         </activity>
     </application>
 

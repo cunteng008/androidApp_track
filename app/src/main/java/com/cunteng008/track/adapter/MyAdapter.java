@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.cunteng008.track.R;
 import com.cunteng008.track.model.DeleteDialog;
-import com.cunteng008.track.model.DetailDialog;
 import com.cunteng008.track.model.PersonalInfo;
 
 import java.util.ArrayList;
@@ -66,36 +65,36 @@ public class MyAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder1 Holder = null;
-        //ViewHolder1 EnemyHolder = null;
-        //根据position获得View的type
+        ViewHolder1 holderFriend = null;
+        ViewHolder1 holderEnemy = null;
         int type = getItemViewType(position);
         if(convertView==null){
-            Holder = new ViewHolder1();
+            holderFriend = new ViewHolder1();
+            holderEnemy = new ViewHolder1();
             switch (type){
                 case TYPE_Friend:
-                    convertView = View.inflate(mContext, R.layout.p_list_item, null);
-                    Holder.mark = (ImageView) convertView.findViewById(R.id.mark);
-                    Holder.content = (TextView) convertView.findViewById(R.id.content);
-                    Holder.deleteImg = (ImageView) convertView.findViewById(R.id.delete_imgView);
-                    convertView.setTag(R.id.my_adapter_tag,Holder);
+                    convertView = View.inflate(mContext, R.layout.list_item, null);
+                    holderFriend.mark = (ImageView) convertView.findViewById(R.id.mark);
+                    holderFriend.content = (TextView) convertView.findViewById(R.id.content);
+                    holderFriend.deleteImg = (ImageView) convertView.findViewById(R.id.delete_imgView);
+                    convertView.setTag(R.id.my_adapter_friend_tag,holderFriend);
                     break;
                 case TYPE_Enemy:
-                    convertView = View.inflate(mContext, R.layout.p_list_item, null);
-                    Holder.mark = (ImageView) convertView.findViewById(R.id.mark);
-                    Holder.content = (TextView) convertView.findViewById(R.id.content);
-                    Holder.deleteImg = (ImageView) convertView.findViewById(R.id.delete_imgView);
-                    convertView.setTag(R.id.my_adapter_tag,Holder);
+                    convertView = View.inflate(mContext, R.layout.list_item, null);
+                    holderEnemy.mark = (ImageView) convertView.findViewById(R.id.mark);
+                    holderEnemy.content = (TextView) convertView.findViewById(R.id.content);
+                    holderEnemy.deleteImg = (ImageView) convertView.findViewById(R.id.delete_imgView);
+                    convertView.setTag(R.id.my_adapter_enemy_tag,holderEnemy);
                     break;
             }
         }
         else{
             switch (type) {
                 case TYPE_Friend:
-                    Holder = (ViewHolder1) convertView.getTag(R.id.my_adapter_tag);
+                    holderFriend = (ViewHolder1) convertView.getTag(R.id.my_adapter_friend_tag);
                     break;
                 case TYPE_Enemy:
-                    Holder = (ViewHolder1) convertView.getTag(R.id.my_adapter_tag);
+                    holderEnemy = (ViewHolder1) convertView.getTag(R.id.my_adapter_enemy_tag);
                     break;
             }
         }
@@ -103,60 +102,39 @@ public class MyAdapter extends BaseAdapter {
         {
             case TYPE_Friend:
                 PersonalInfo fp = mInfoList.get(position);
-                Holder.mark.setImageResource(R.drawable.friend_icon);
-                Holder.content.setText(fp.getName()+" "+fp.getNum());
+                holderFriend.mark.setImageResource(R.drawable.friend_icon);
+                holderFriend.content.setText(fp.getName()+" "+fp.getNum());
+
+                holderFriend.deleteImg.setImageResource(R.drawable.delete);
+                holderFriend.deleteImg.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        deleteDialog(position);
+                    }
+                });
                 if(mDoWhat.equals("edit")){
-                    Holder.deleteImg.setImageResource(R.drawable.delete);
-                    Holder.deleteImg.setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v){
-                            deleteDialog(position);
-                        }
-                    });
-                }
-                else{
-                    Holder.content.setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v){
-                           detailDialog(position);
-                        }
-                    });
-                    Holder.mark.setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v){
-                            detailDialog(position);
-                        }
-                    });
+                   holderFriend.deleteImg.setVisibility(View.VISIBLE);
+                }else {
+                    holderFriend.deleteImg.setVisibility(View.INVISIBLE);
                 }
                 break;
             case TYPE_Enemy:
                 PersonalInfo ep = mInfoList.get(position);
-                Holder.mark.setImageResource(R.drawable.enemy_icon);
-                Holder.content.setText(ep.getName()+" "+ep.getNum());
-                Holder.content.setTextColor(Color.rgb(236, 50, 57));
-                if(mDoWhat.equals("edit")){
-                    Holder.deleteImg.setImageResource(R.drawable.delete);
-                    Holder.deleteImg.setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v){
-                            deleteDialog(position);
-                        }
-                    });
+                holderEnemy.mark.setImageResource(R.drawable.enemy_icon);
+                holderEnemy.content.setText(ep.getName()+" "+ep.getNum());
+                holderEnemy.content.setTextColor(Color.rgb(236, 50, 57));
 
-                }
-                else{
-                    Holder.content.setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v){
-                            detailDialog(position);
-                        }
-                    });
-                    Holder.mark.setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v){
-                            detailDialog(position);
-                        }
-                    });
+                holderEnemy.deleteImg.setImageResource(R.drawable.delete);
+                holderEnemy.deleteImg.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        deleteDialog(position);
+                    }
+                });
+                if(mDoWhat.equals("edit")){
+                    holderEnemy.deleteImg.setVisibility(View.VISIBLE);
+                }else {
+                    holderEnemy.deleteImg.setVisibility(View.INVISIBLE);
                 }
                 break;
         }
@@ -203,31 +181,4 @@ public class MyAdapter extends BaseAdapter {
          mDeleteDialog.show();
     }
 
-    //显示详细内容窗口
-    private void detailDialog(final int pos){
-        final DetailDialog detailDialog ;
-        detailDialog = new DetailDialog(mContext);
-        final TextView textName = (TextView) detailDialog.getTextName();
-        final TextView textNum = (TextView)  detailDialog.getTextNum();
-        final TextView textPos = (TextView) detailDialog.getTextPositon();
-
-        textName.setText("Name:"+"\n"+mInfoList.get(pos).getName());
-        textNum.setText("Number:"+"\n"+mInfoList.get(pos).getNum());
-       textPos.setText("Latitude/Longitude:" +"\n"+mInfoList.get(pos).getLatitude()+"N"
-               +"/" +mInfoList.get(pos).getLongitude()+"E");
-        detailDialog.setOnOKListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detailDialog.dismiss();
-            }
-        });
-        detailDialog.setOnNOListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detailDialog.dismiss();
-            }
-        });
-
-        detailDialog.show();
-    }
 }

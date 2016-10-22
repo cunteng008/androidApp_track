@@ -1,12 +1,20 @@
 package com.cunteng008.track.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -17,7 +25,6 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
-import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
@@ -25,6 +32,7 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.cunteng008.track.R;
 import com.cunteng008.track.constant.Constant;
@@ -33,6 +41,7 @@ import com.cunteng008.track.model.PersonalInfo;
 import com.cunteng008.track.util.File;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -49,15 +58,18 @@ public class MainActivity extends AppCompatActivity {
     private boolean mIsFirstLoc = true;
 
     //布局中的控件
-    Button mRefurbishButton;
-    Button mFriendsButton;
-    Button mEenemiesButton;
+    ToggleButton mRefreshBtn;
+    Button mLocateBtn;
+    Button mFriendsBtn;
+    Button mEenemiesBtn;
+    ImageView mImageviewSweep;
+    Animation mAnim ;
 
     //数据
-   public static ArrayList<PersonalInfo> mFriendInfoList = new ArrayList<>();
-   public static ArrayList<PersonalInfo> mEnemyInfoList = new ArrayList<>();
+   public static ArrayList<PersonalInfo> mFriendInfoList = new ArrayList<PersonalInfo>();
+   public static ArrayList<PersonalInfo> mEnemyInfoList = new ArrayList<PersonalInfo>();
     //我的位置
-    public static BDLocation mMyLocation = new BDLocation();
+   public static BDLocation mMyLocation = new BDLocation();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,35 +77,43 @@ public class MainActivity extends AppCompatActivity {
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
-        mRefurbishButton = (Button) findViewById(R.id.refurbish_button);
-        mRefurbishButton.setOnClickListener(new View.OnClickListener(){
+        mAnim = AnimationUtils.loadAnimation(this, R.anim.rotate_indefinitely);
+        mImageviewSweep = (ImageView) findViewById(R.id.imageview_sweep);
+        mRefreshBtn = (ToggleButton) findViewById(R.id.refresh_btn);
+        mRefreshBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Toast.makeText(MainActivity.this,"刷新",Toast.LENGTH_SHORT).show();
-
-             addOverlay(mFriendInfoList,mEnemyInfoList);
-
-                for(PersonalInfo info:mFriendInfoList){
-                    String phone =info.getNum();
-                    SmsManager manager = SmsManager.getDefault();
-                    //因为一条短信有字数限制，因此要将长短信拆分
-                    ArrayList<String> list = manager.divideMessage(Constant.ASK_LOCATION);
-                    for(String text:list){
-                        manager.sendTextMessage(phone, null, text, null, null);
+                if(mRefreshBtn.isChecked()){
+                    //开始转动
+                    mImageviewSweep.startAnimation(mAnim);
+                    for(PersonalInfo info:mFriendInfoList){
+                        mySendTextMessage(info.getNum(),Constant.ASK_LOCATION);
                     }
+                    for(PersonalInfo info:mEnemyInfoList){
+                        mySendTextMessage(info.getNum(),Constant.ASK_LOCATION);
+                    }
+                    Toast.makeText(MainActivity.this,"完成短信发送",Toast.LENGTH_SHORT).show();
                 }
-                //因为收到短信需要时间
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                else {
+                    mImageviewSweep.setCropToPadding(true);
+                    Toast.makeText(MainActivity.this,"结束刷新,显示位置",Toast.LENGTH_SHORT).show();
+                    //清空地图
+                    mBaiduMap.clear();
+                    addAllOverlay(mFriendInfoList,mEnemyInfoList);
                 }
-                addOverlay(mFriendInfoList,mEnemyInfoList);
             }
         });
 
-        mFriendsButton = (Button) findViewById(R.id.m_friends_button);
-        mFriendsButton.setOnClickListener(new View.OnClickListener(){
+        mLocateBtn = (Button) findViewById(R.id.locate_btn);
+        mLocateBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                setMeToCenter(mMyLocation);
+            }
+        });
+
+        mFriendsBtn = (Button) findViewById(R.id.m_friends_btn);
+        mFriendsBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent mIntent = new Intent(MainActivity.this,FriendsActivity.class);
@@ -101,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mEenemiesButton = (Button) findViewById(R.id.m_enemies_btn);
-        mEenemiesButton.setOnClickListener(new View.OnClickListener(){
+        mEenemiesBtn = (Button) findViewById(R.id.m_enemies_btn);
+        mEenemiesBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent mIntent = new Intent(MainActivity.this,EnemiesActivity.class);
@@ -115,6 +135,17 @@ public class MainActivity extends AppCompatActivity {
         mLocClient.start();
     }
 
+    public static void setTextMessage(){
+
+    }
+    public static void mySendTextMessage(String phone,String msg){
+        SmsManager manager = SmsManager.getDefault();
+        //因为一条短信有字数限制，因此要将长短信拆分
+        ArrayList<String> list = manager.divideMessage(msg);
+        for(String text:list){
+            manager.sendTextMessage(phone, null, text, null, null);
+        }
+    }
     //定位的相关设置
     private void init(){
 
@@ -171,75 +202,120 @@ public class MainActivity extends AppCompatActivity {
                     .longitude(location.getLongitude()).build();
             mBaiduMap.setMyLocationData(locData);
 
-                //设置我始终位于中心
-                LatLng ll = new LatLng(location.getLatitude(),
-                        location.getLongitude());
-                mMyLocation = location;
-                MapStatus.Builder builder = new MapStatus.Builder();
-                //图层设置为当前值
-                builder.target(ll).zoom(mBaiduMap.getMapStatus().zoom);
-               mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+            mMyLocation = location;
+
             if(mIsFirstLoc){
-                addOverlay(mFriendInfoList,mEnemyInfoList);
+                setMeToCenter(location);
+                addAllOverlay(mFriendInfoList,mEnemyInfoList);
                 mIsFirstLoc = false;
             }
         }
         public void onReceivePoi(BDLocation poiLocation) {
         }
     }
-
-    //显示marker
-    private void addOverlay(ArrayList<PersonalInfo> friendInfoList,
-                            ArrayList<PersonalInfo> enemyInfoList) {
-        //清空地图
-        mBaiduMap.clear();
-        //创建marker的显示图标
-        BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.friend_icon);
-        LatLng latLng = null;
-        Marker marker;
-        OverlayOptions options;
-        for(PersonalInfo info:friendInfoList){
-            //获取经纬度
-            latLng = new LatLng(info.getLatitude()+0.1,info.getLongitude()+0.1);
-            //设置marker
-            options = new MarkerOptions()
-                    .position(latLng)//设置位置
-                    .icon(bitmap)//设置图标样式
-                    .zIndex(17) // 设置marker所在层级
-                    .draggable(true); // 设置手势拖拽;
-            //添加marker
-            marker = (Marker) mBaiduMap.addOverlay(options);
-            //使用marker携带info信息，当点击事件的时候可以通过marker获得info信息
-            Bundle bundle = new Bundle();
-            //info必须实现序列化接口
-            bundle.putSerializable("info", info);
-            marker.setExtraInfo(bundle);
-        }
-        //创建marker的显示图标
-       bitmap = BitmapDescriptorFactory.fromResource(R.drawable.enemy_icon);
-        for(PersonalInfo info:enemyInfoList){
-            //获取经纬度
-            latLng = new LatLng(info.getLatitude(),info.getLongitude());
-            //设置marker
-            options = new MarkerOptions()
-                    .position(latLng)//设置位置
-                    .icon(bitmap)//设置图标样式
-                    .zIndex(17) // 设置marker所在层级
-                    .draggable(true); // 设置手势拖拽;
-            //添加marker
-            marker = (Marker) mBaiduMap.addOverlay(options);
-            //使用marker携带info信息，当点击事件的时候可以通过marker获得info信息
-            Bundle bundle = new Bundle();
-            //info必须实现序列化接口
-            bundle.putSerializable("info", info);
-            marker.setExtraInfo(bundle);
-        }
-        //将地图显示在最后一个marker的位置
-        MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
-        mBaiduMap.setMapStatus(msu);
+    public void setMeToCenter(BDLocation location){
+        //设置我始终位于中心
+        LatLng ll = new LatLng(location.getLatitude(),
+                location.getLongitude());
+        MapStatus.Builder builder = new MapStatus.Builder();
+        //图层设置为当前值
+        builder.target(ll).zoom(mBaiduMap.getMapStatus().zoom);
+        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
     }
 
-   //计算两点之间距离
+    //在百度地图设置图标
+    //icon_type图标的类型
+   public void addOverlay(PersonalInfo info,String icon_type) {
+        BitmapDescriptor bitmap ;
+        LayoutInflater inflater = LayoutInflater.from(this);
+        LatLng point = new LatLng(info.getLatitude(),
+                info.getLongitude());
+        if(icon_type.equals(Constant.FRIEND)){
+            View markerView = inflater.inflate(R.layout.friend_marker, null);
+            ((TextView) markerView.findViewById(R.id.friend_marker_textView1))
+                    .setText(info.getName());
+            ((TextView) markerView.findViewById(R.id.friend_marker_textView2))
+                    .setText(info.getNum());
+            bitmap = BitmapDescriptorFactory.fromView(markerView);
+
+            BDLocation location = new BDLocation();
+            location.setLatitude(info.getLatitude());
+            location.setLongitude(info.getLongitude());
+            drawLines(mMyLocation,location,Constant.FRIEND);
+        }else {
+            View markerView = inflater.inflate(R.layout.enemy_markar, null);
+            ((TextView) markerView.findViewById(R.id.enemy_marker_textView1))
+                    .setText(info.getName());
+            ((TextView) markerView.findViewById(R.id.enemy_marker_textView2))
+                    .setText(info.getNum());
+            bitmap = BitmapDescriptorFactory.fromView(markerView);
+
+            BDLocation location = new BDLocation();
+            location.setLatitude(info.getLatitude());
+            location.setLongitude(info.getLongitude());
+            drawLines(mMyLocation,location,Constant.ENEMY);
+        }
+        OverlayOptions option = new MarkerOptions().position(point).icon(bitmap);
+        mBaiduMap.addOverlay(option);
+    }
+
+    //向所有可用点添加图标
+    private void addAllOverlay(ArrayList<PersonalInfo> friendInfoList,
+                               ArrayList<PersonalInfo> enemyInfoList){
+        for(PersonalInfo info:friendInfoList){
+            if(info.getLatitude()>0){
+                addOverlay(info,Constant.FRIEND);
+            }
+        }
+        for(PersonalInfo info:enemyInfoList){
+            if(info.getLatitude()>0){
+                addOverlay(info,Constant.ENEMY);
+            }
+        }
+    }
+
+    public void  drawLines(BDLocation start,BDLocation end,String lineStyle){
+        //线条颜色设定
+        int r,g,b;
+        r=g=b=0;
+        if(lineStyle.equals(Constant.ENEMY)){
+            //红色
+            r = 236;
+            g = 50;
+            b = 57;
+        }else {
+            //绿色
+            r = 57;
+            g = 181;
+            b = 74;
+        }
+
+        LatLng p1 = new LatLng(start.getLatitude(), start.getLongitude());
+        LatLng p2 = new LatLng(end.getLatitude(), end.getLongitude());
+        List<LatLng> points = new ArrayList<LatLng>();
+        points.add(p1);
+        points.add(p2);
+        OverlayOptions ooPolyline = new PolylineOptions().width(5).color(Color.rgb(r, g, b)).points(points);
+        mBaiduMap.addOverlay(ooPolyline);
+        //调用Distance方法获取两点间x,y轴之间的距离
+        String distance= getDistance(start,  end);
+
+        BitmapDescriptor bitmap ;
+        LayoutInflater inflater = LayoutInflater.from(this);
+        LatLng point = new LatLng((start.getLatitude()+end.getLatitude())/2,
+                (start.getLongitude()+end.getLongitude())/2);
+
+            View markerView = inflater.inflate(R.layout.distance_info, null);
+            ((TextView) markerView.findViewById(R.id.distance_info))
+                    .setText(distance);
+            ((TextView) markerView.findViewById(R.id.distance_info))
+                    .setTextColor(Color.rgb(r, g, b));
+            bitmap = BitmapDescriptorFactory.fromView(markerView);
+        OverlayOptions option = new MarkerOptions().position(point).icon(bitmap);
+        mBaiduMap.addOverlay(option);
+    }
+
+    //计算两点之间距离
    // @param start
    // @param end
    // @return 米

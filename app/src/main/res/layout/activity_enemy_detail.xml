@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_enemy_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--头部-->
+    <LinearLayout
+        android:id="@+id/vgp_enemy_detail_header"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#ed383f"
+        android:layout_alignParentTop="true">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <Button
+                android:id = "@+id/add_enemy_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/add_enemy"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textColor="#e5e3e4"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="ENEMIES"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <Button
+                android:id = "@+id/e_edit_btn"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:background="@drawable/enemy_edit_button_bg"
+                android:textColor="#fffffd"
+                android:textSize="20sp"
+                android:text="Edit"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--体body-->
+    <RelativeLayout
+        android:id="@+id/vgp_enemy_detail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/enemies_list_item_background"
+        android:paddingTop="10px"
+        android:paddingRight="10px"
+        android:paddingLeft="40px"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/vgp_enemy_detail_header"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:id="@+id/txt_detail_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="#EC3239"
+            android:paddingLeft="35dp"
+            android:textSize="18dp"
+            android:text="name num"/>
+        <ImageView
+            android:id = "@+id/delete_imgView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/delete"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/enemy_detail_centre_background"
+        android:layout_marginBottom="60dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical"
+        android:layout_below="@id/vgp_enemy_detail"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:id="@+id/txt_enemy_number"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingTop="30dp"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:text="13143122980"/>
+
+        <TextView android:id="@+id/txt_enemy_long_lang"
+                  android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="1.5"
+                  android:gravity="right"
+                  android:paddingTop="50dp"
+                  android:textColor="@android:color/white"
+                  android:textSize="15dp"
+                  android:text="12.26N/77.55E"/>
+
+        <TextView android:id="@+id/txt_enemy_altitude"
+                  android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="1"
+                  android:gravity="right"
+                  android:paddingTop="30dp"
+                  android:textColor="@android:color/white"
+                  android:textSize="15dp"
+                  android:text="altitude"/>
+
+        <TextView android:id="@+id/txt_enemy_accuracy"
+                  android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="1"
+                  android:gravity="right"
+                  android:paddingTop="25dp"
+                  android:textColor="@android:color/white"
+                  android:textSize="15dp"
+                  android:text="accuracy"/>
+
+        <TextView
+            android:id="@+id/txt_enemy_nearest_city"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingTop="20dp"
+            android:textColor="@android:color/white"
+            android:textSize="15dp"
+            android:text="neast_city"/>
+        <TextView
+            android:id="@+id/txt_enemy_secs_last_update"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingTop="20dp"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:text="secs last update"/>
+
+        <TextView
+            android:id="@+id/txt_enemy_secs_next_update"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingTop="20dp"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:text="secs_next_update"/>
+    </LinearLayout>
+
+    <!--底部-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/list_footer">
+        <Button
+            android:id = "@+id/e_radar_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_footer_def"
+            android:layout_weight="3"
+            android:textColor="#848484"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="RADAR"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <Button
+            android:id = "@+id/e_enemies_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_footer_def"
+            android:layout_weight="3"
+            android:textColor="@color/colorFriend"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="FRIENDS"/>
+    </LinearLayout>
+</RelativeLayout>

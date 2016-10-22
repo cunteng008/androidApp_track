@@ -11,6 +11,8 @@ public class PersonalInfo implements Serializable {
     private String mName;
     private double mLatitude;
     private double mLongitude;
+    private int mAccuracy;
+    private String mNearestCity;
     private boolean mIsFriend;
 
     public String getNum() {

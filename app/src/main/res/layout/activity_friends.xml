@@ -65,21 +65,27 @@
         android:layout_height="60dp"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:background="#4b504c">
+        android:background="@drawable/list_footer">
         <Button
             android:id = "@+id/f_radar_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:background="@drawable/button_footer_def"
+            android:layout_weight="3"
             android:textColor="#848484"
             android:textSize="20sp"
             android:textStyle="bold"
             android:text="RADAR"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
         <Button
             android:id = "@+id/f_enemies_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:background="@drawable/button_footer_def"
+            android:layout_weight="3"
             android:textColor="#ec333b"
             android:textSize="20sp"
             android:textStyle="bold"

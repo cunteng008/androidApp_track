@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:2:1-58:12
+ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:2:1-62:12
 	package
 		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:3:11-41
 		INJECTED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml
@@ -57,12 +57,16 @@ uses-permission#android.permission.SEND_SMS
 ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:16:5-66
 	android:name
 		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:16:22-64
-uses-permission#android.permission.RECEIVE_SMS
-ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:18:5-69
+uses-permission#android.permission.READ_SMS
+ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:18:5-66
 	android:name
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:18:22-67
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:18:22-64
+uses-permission#android.permission.RECEIVE_SMS
+ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:20:5-69
+	android:name
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:20:22-67
 application
-ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:20:5-56:19
+ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:22:5-60:19
 MERGED from [com.android.support:appcompat-v7:24.2.1] D:\Mingjing\Android\project2\track\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:support-v4:24.2.1] D:\Mingjing\Android\project2\track\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:support-compat:24.2.1] D:\Mingjing\Android\project2\track\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\AndroidManifest.xml:25:5-20
@@ -73,45 +77,45 @@ MERGED from [com.android.support:support-fragment:24.2.1] D:\Mingjing\Android\pr
 MERGED from [com.android.support:support-vector-drawable:24.2.1] D:\Mingjing\Android\project2\track\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\AndroidManifest.xml:23:5-20
 MERGED from [com.android.support:animated-vector-drawable:24.2.1] D:\Mingjing\Android\project2\track\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\AndroidManifest.xml:22:5-20
 	android:label
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:23:9-41
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:25:9-41
 	android:supportsRtl
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:24:9-35
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:26:9-35
 	android:allowBackup
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:21:9-35
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:23:9-35
 	android:icon
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:22:9-43
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:24:9-43
 	android:theme
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:25:9-40
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:27:9-40
 receiver#com.cunteng008.track.MessageReceiver
-ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:27:9-31:20
+ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:28:9-32:20
 	android:name
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:27:19-50
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:28:19-50
 intent-filter#android.provider.Telephony.SMS_RECEIVED
-ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:28:13-30:29
+ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:29:13-31:29
 	android:priority
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:28:28-51
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:29:28-51
 action#android.provider.Telephony.SMS_RECEIVED
-ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:29:17-81
+ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:30:17-81
 	android:name
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:29:25-79
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:30:25-79
 meta-data#com.baidu.lbsapi.API_KEY
-ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:34:9-36:63
+ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:35:9-37:63
 	android:value
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:36:13-61
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:37:13-61
 	android:name
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:35:13-52
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:36:13-52
 service#com.baidu.location.f
-ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:38:9-42:19
+ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:39:9-43:19
 	android:enabled
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:40:13-35
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:41:13-35
 	android:process
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:41:13-38
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:42:13-38
 	android:name
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:39:13-48
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:40:13-48
 activity#com.cunteng008.track.activity.MainActivity
-ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:44:9-51:20
+ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:45:9-51:20
 	android:name
-		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:44:19-56
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:45:19-56
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
 ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:46:13-50:29
 action#android.intent.action.MAIN
@@ -130,6 +134,14 @@ activity#com.cunteng008.track.activity.EnemiesActivity
 ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:54:9-55:20
 	android:name
 		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:54:19-59
+activity#com.cunteng008.track.activity.FriendDetailActivity
+ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:56:9-57:20
+	android:name
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:56:19-64
+activity#com.cunteng008.track.activity.EnemyDetailActivity
+ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:58:9-59:20
+	android:name
+		ADDED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml:58:19-63
 uses-sdk
 INJECTED from D:\Mingjing\Android\project2\track\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:appcompat-v7:24.2.1] D:\Mingjing\Android\project2\track\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\AndroidManifest.xml:21:5-23:78

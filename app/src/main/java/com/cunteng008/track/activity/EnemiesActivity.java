@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.cunteng008.track.R;
 import com.cunteng008.track.adapter.MyAdapter;
+import com.cunteng008.track.constant.Constant;
 import com.cunteng008.track.constant.MyAdapterConstant;
 import com.cunteng008.track.model.AddDialog;
 import com.cunteng008.track.model.PersonalInfo;
@@ -47,6 +49,7 @@ public class EnemiesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!mEditSwitch) {
                     mEditSwitch = true;
+                    mEditBtn.setText(Constant.DONE);
                     //敌人显示选择false
                     mMyAdapter = new MyAdapter(EnemiesActivity.this, MainActivity.mEnemyInfoList,
                             false, MyAdapterConstant.EDIT);
@@ -54,6 +57,7 @@ public class EnemiesActivity extends AppCompatActivity {
                     mELv.setAdapter(mMyAdapter);
                 } else {
                     mEditSwitch = false;
+                    mEditBtn.setText(Constant.EDIT);
                     //敌人显示选择false
                     mMyAdapter = new MyAdapter(EnemiesActivity.this, MainActivity.mEnemyInfoList,
                             false, MyAdapterConstant.DEFAULT);
@@ -63,7 +67,18 @@ public class EnemiesActivity extends AppCompatActivity {
             }
         });
 
-        mAddEnemyBtn = (Button) findViewById(R.id.add_enemy_btn);
+        mELv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            // i 表示第几个item响应
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent mIntent = new Intent(EnemiesActivity.this,EnemyDetailActivity.class);
+                mIntent.putExtra("extra_index",i+"");
+                startActivityForResult(mIntent,2);
+                finish();
+            }
+        });
+
+        mAddEnemyBtn = (Button) findViewById(R.id.add_friend_btn);
         mAddEnemyBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -119,8 +134,8 @@ public class EnemiesActivity extends AppCompatActivity {
                 PersonalInfo p = new PersonalInfo();
                 p.setName(name);
                 p.setNum(num);
-                p.setLatitude(MainActivity.mMyLocation.getLatitude());
-                p.setLongitude(MainActivity.mMyLocation.getLongitude());
+                p.setLatitude(-1);
+                p.setLongitude(-1);
                 MainActivity.mEnemyInfoList.add(p);
                 mMyAdapter.notifyDataSetChanged();
                 mAddDialog.dismiss();

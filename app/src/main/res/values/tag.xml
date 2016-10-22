@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="my_adapter_tag" type="id"></item>
-    <item name="enemy_tag" type="id"></item>
+    <item name="my_adapter_friend_tag" type="id"></item>
+    <item name="my_adapter_enemy_tag" type="id"></item>
 </resources>

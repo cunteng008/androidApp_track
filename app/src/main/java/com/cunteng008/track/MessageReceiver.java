@@ -14,13 +14,14 @@ import com.cunteng008.track.constant.Constant;
 import com.cunteng008.track.constant.FileName;
 import com.cunteng008.track.model.PersonalInfo;
 import com.cunteng008.track.util.File;
+import com.cunteng008.track.util.myTools;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
  * Created by CMJ on 2016/10/14.
  */
-
 public class MessageReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent){
@@ -95,6 +96,9 @@ public class MessageReceiver extends BroadcastReceiver {
                 try {
                     lon = Double.parseDouble(strOfLocation[0]);
                     lat = Double.parseDouble(strOfLocation[1]);
+                    //设置保留小数点位数
+                    lon = myTools.ReservedDecimalResult(lon,4);
+                    lat = myTools.ReservedDecimalResult(lat,4);
                 }catch (Exception e){
                     return;
                 }
@@ -116,6 +120,8 @@ public class MessageReceiver extends BroadcastReceiver {
                 try {
                     lon = Double.parseDouble(strOfLocation[0]);
                     lat = Double.parseDouble(strOfLocation[1]);
+                    lon = myTools.ReservedDecimalResult(lon,4);
+                    lat = myTools.ReservedDecimalResult(lat,4);
                 }catch (Exception e){
                     return;
                 }

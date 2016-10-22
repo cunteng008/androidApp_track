@@ -4,30 +4,32 @@
               android:layout_marginRight="30dp"
               android:layout_marginLeft="30dp"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
-
+              android:layout_height="wrap_content"
+              android:screenOrientation="portrait"
+              android:background="@drawable/dialog_background">
     <TextView
         android:id = "@+id/delete_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
         android:textStyle="bold"
+        android:textSize="20sp"
         android:text="DELETE FRIEND"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:gravity="center">
         <ImageView
             android:id="@+id/delete_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/friend_icon"/>
+            android:src="@drawable/friend_delete_icon"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="40dp">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -50,7 +52,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="40dp">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -77,15 +79,15 @@
         android:gravity="center">
         <Button
             android:id = "@+id/delete_OK_btn"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="100dp"
-            android:text="OK"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/dialog_ok_def"
+            android:layout_marginRight="30dp"/>
         <Button
             android:id = "@+id/delete_NO_btn"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="NO"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/dialog_close_def"/>
     </LinearLayout>
 
 </LinearLayout>
