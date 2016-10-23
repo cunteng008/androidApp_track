@@ -1,7 +1,6 @@
 package com.cunteng008.track.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +26,6 @@ import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
@@ -42,6 +40,10 @@ import com.cunteng008.track.util.File;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.cunteng008.track.util.AES.decrypt;
+import static com.cunteng008.track.util.AES.encrypt;
+import static com.cunteng008.track.util.DES.encryptDES;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -84,14 +86,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 if(mRefreshBtn.isChecked()){
+                    String msgText =Constant.ASK_LOCATION;
+                    try {
+                        msgText = encryptDES("12345678",msgText);
+                    }catch (Exception e){
+                        return;
+                    }
                     //开始转动
                     mImageviewSweep.startAnimation(mAnim);
                     for(PersonalInfo info:mFriendInfoList){
-                        mySendTextMessage(info.getNum(),Constant.ASK_LOCATION);
+                        mySendTextMessage(info.getNum(),msgText);
                     }
                     for(PersonalInfo info:mEnemyInfoList){
-                        mySendTextMessage(info.getNum(),Constant.ASK_LOCATION);
+                        mySendTextMessage(info.getNum(),msgText);
                     }
+
                     Toast.makeText(MainActivity.this,"完成短信发送",Toast.LENGTH_SHORT).show();
                 }
                 else {

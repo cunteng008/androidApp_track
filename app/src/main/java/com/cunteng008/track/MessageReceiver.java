@@ -7,6 +7,7 @@ import android.nfc.FormatException;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
+import android.util.Log;
 
 import com.baidu.location.BDLocation;
 import com.cunteng008.track.activity.MainActivity;
@@ -18,6 +19,10 @@ import com.cunteng008.track.util.myTools;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+
+import static com.cunteng008.track.util.DES.decryptDES;
+import static com.cunteng008.track.util.DES.encryptDES;
+import static com.cunteng008.track.util.myTools.verifyLatLon;
 
 /**
  * Created by CMJ on 2016/10/14.
@@ -32,9 +37,16 @@ public class MessageReceiver extends BroadcastReceiver {
             messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
         }
         String address = messages[0].getOriginatingAddress();  //获取发送方号码
-        String fullMessage = "";
+       String fullMessage = "";
         for(SmsMessage message : messages){
             fullMessage += message.getMessageBody();  //获取短信内容
+        }
+
+        try {
+            //种子为123
+            fullMessage = decryptDES("12345678",fullMessage);
+        }catch (Exception e){
+            return;
         }
 
         //若收到where are you,则执行
@@ -65,6 +77,11 @@ public class MessageReceiver extends BroadcastReceiver {
             String myLocation =  MainActivity.mMyLocation.getLongitude()
                     + "/" +MainActivity.mMyLocation.getLatitude();
             SmsManager manager = SmsManager.getDefault();
+            try {
+                myLocation = encryptDES("12345678",myLocation);
+            }catch (Exception e){
+                return;
+            }
             //因为一条短信有字数限制，因此要将长短信拆分
             ArrayList<String> list = manager.divideMessage(myLocation );
             for(String text:list){
@@ -72,7 +89,9 @@ public class MessageReceiver extends BroadcastReceiver {
             }
             return;
         }
-
+        else if(!verifyLatLon(fullMessage)){
+            return;
+        }
         /*
         int loc;
         if((loc = fullMessage.indexOf(":"))< 0){
@@ -89,7 +108,7 @@ public class MessageReceiver extends BroadcastReceiver {
         int j=0;
         for(PersonalInfo info:MainActivity.mFriendInfoList){
             if(info.getNum().equals(address)){
-                //若收到经纬度，则执行
+
                 String[] strOfLocation = analyzeReceivedMassage(fullMessage);
                 double lon;
                 double lat;
@@ -115,8 +134,8 @@ public class MessageReceiver extends BroadcastReceiver {
             if(info.getNum().equals(address)){
                 //若收到经纬度，则执行
                 String[] strOfLocation = analyzeReceivedMassage(fullMessage);
-                double lon;
-                double lat;
+                double lon=0;
+                double lat=0;
                 try {
                     lon = Double.parseDouble(strOfLocation[0]);
                     lat = Double.parseDouble(strOfLocation[1]);
@@ -135,7 +154,7 @@ public class MessageReceiver extends BroadcastReceiver {
     }
 
     //解析短信,返回lon，lat两个字符串
-    String[] analyzeReceivedMassage(String text){
+    String[] analyzeReceivedMassage(String text) {
         String temp = text ;
         //取得斜杠的位置
         int loc = temp.indexOf('/');

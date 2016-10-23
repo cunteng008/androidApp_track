@@ -2,9 +2,13 @@ package com.cunteng008.track.model;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +21,10 @@ import com.cunteng008.track.R;
  */
 
 public class AddDialog extends Dialog {
+
+    private static int default_width = 160; //默认宽度
+    private static int default_height = 120;//默认高度
+
     private EditText mEditName;
     private EditText mEditNum;
     private ImageView mAddIcon;
@@ -41,7 +49,9 @@ public class AddDialog extends Dialog {
         mAddIcon = (ImageView) mView.findViewById(R.id.add_icon);
         mOKBtn = (Button) mView.findViewById(R.id.add_OK_btn);
         mNOBtn = (Button) mView.findViewById(R.id.add_NO_btn);
+        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         super.setContentView(mView);
+
     }
 
     public View getEditName(){
