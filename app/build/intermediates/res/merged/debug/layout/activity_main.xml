@@ -68,7 +68,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"/>
 
-            <ToggleButton android:id="@+id/refresh_btn"
+            <Button android:id="@+id/refresh_btn"
                           android:layout_width="60dp"
                           android:layout_height="wrap_content"
                           android:background="@drawable/button_refresh_def"

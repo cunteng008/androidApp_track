@@ -24,13 +24,17 @@ public class MyAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<PersonalInfo> mInfoList=new ArrayList<PersonalInfo>();
     private boolean mIsFriend;
-    private String mDoWhat;
+    //默认只显示列表信息，无编辑操作
+    private String mDoWhat = "Default";
 
     public MyAdapter(Context context, ArrayList<PersonalInfo> listItems,
-                     boolean isFriend,String doWhat) {
+                     boolean isFriend) {
         mInfoList = listItems;
         mIsFriend = isFriend;
         mContext = context;
+    }
+
+    public void setDoWhat(String doWhat){
         mDoWhat = doWhat;
     }
 
@@ -180,5 +184,4 @@ public class MyAdapter extends BaseAdapter {
         });
          mDeleteDialog.show();
     }
-
 }

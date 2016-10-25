@@ -15,11 +15,15 @@ import android.widget.Toast;
 import com.cunteng008.track.R;
 import com.cunteng008.track.adapter.MyAdapter;
 import com.cunteng008.track.constant.Constant;
+import com.cunteng008.track.constant.FileName;
 import com.cunteng008.track.constant.MyAdapterConstant;
 import com.cunteng008.track.model.AddDialog;
 import com.cunteng008.track.model.PersonalInfo;
+import com.cunteng008.track.util.File;
 
 import static com.cunteng008.track.R.drawable.enemy_icon;
+import static com.cunteng008.track.activity.MainActivity.mEnemyInfoList;
+import static com.cunteng008.track.activity.MainActivity.mFriendInfoList;
 
 public class EnemiesActivity extends AppCompatActivity {
 
@@ -51,18 +55,14 @@ public class EnemiesActivity extends AppCompatActivity {
                     mEditSwitch = true;
                     mEditBtn.setText(Constant.DONE);
                     //敌人显示选择false
-                    mMyAdapter = new MyAdapter(EnemiesActivity.this, MainActivity.mEnemyInfoList,
-                            false, MyAdapterConstant.EDIT);
-                    mELv = (ListView) findViewById(R.id.e_lv);  /*定义一个动态数组*/
-                    mELv.setAdapter(mMyAdapter);
+                    mMyAdapter .setDoWhat(MyAdapterConstant.EDIT);
+                    mMyAdapter.notifyDataSetChanged();
                 } else {
                     mEditSwitch = false;
                     mEditBtn.setText(Constant.EDIT);
                     //敌人显示选择false
-                    mMyAdapter = new MyAdapter(EnemiesActivity.this, MainActivity.mEnemyInfoList,
-                            false, MyAdapterConstant.DEFAULT);
-                    mELv = (ListView) findViewById(R.id.e_lv);  /*定义一个动态数组*/
-                    mELv.setAdapter(mMyAdapter);
+                    mMyAdapter .setDoWhat(MyAdapterConstant.DEFAULT);
+                    mMyAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -107,8 +107,8 @@ public class EnemiesActivity extends AppCompatActivity {
     }
 
     private void init(){
-        mMyAdapter = new MyAdapter(EnemiesActivity.this, MainActivity.mEnemyInfoList,
-                    false, MyAdapterConstant.DEFAULT);
+        mMyAdapter = new MyAdapter(EnemiesActivity.this, mEnemyInfoList,
+                    false);
         mELv = (ListView) findViewById(R.id.e_lv);  /*定义一个动态数组*/
         mELv.setAdapter(mMyAdapter);
     }
@@ -136,7 +136,7 @@ public class EnemiesActivity extends AppCompatActivity {
                 p.setNum(num);
                 p.setLatitude(-1);
                 p.setLongitude(-1);
-                MainActivity.mEnemyInfoList.add(p);
+                mEnemyInfoList.add(p);
                 mMyAdapter.notifyDataSetChanged();
                 mAddDialog.dismiss();
             }
@@ -149,4 +149,5 @@ public class EnemiesActivity extends AppCompatActivity {
         });
         mAddDialog.show();
     }
+
 }

@@ -51,18 +51,13 @@ public class FriendsActivity extends AppCompatActivity {
                 if(!mEditSwitch){
                     mEditSwitch = true;
                     mEditBtn.setText(Constant.DONE);
-                    mMyAdapter = new MyAdapter(FriendsActivity.this,MainActivity.mFriendInfoList,
-                            true, MyAdapterConstant.EDIT);
-                    mFLv = (ListView) findViewById(R.id.f_lv);  /*定义一个动态数组*/
-                    mFLv.setAdapter(mMyAdapter);
-                }
-                else {
+                    mMyAdapter.setDoWhat(MyAdapterConstant.EDIT);
+                    mMyAdapter.notifyDataSetChanged();
+                } else {
                     mEditSwitch = false;
                     mEditBtn.setText(Constant.EDIT);
-                    mMyAdapter = new MyAdapter(FriendsActivity.this,MainActivity.mFriendInfoList,
-                            true, MyAdapterConstant.DEFAULT);
-                    mFLv = (ListView) findViewById(R.id.f_lv);  /*定义一个动态数组*/
-                    mFLv.setAdapter(mMyAdapter);
+                    mMyAdapter.setDoWhat(MyAdapterConstant.DEFAULT);
+                    mMyAdapter.notifyDataSetChanged();;
                 }
             }
         });
@@ -107,7 +102,7 @@ public class FriendsActivity extends AppCompatActivity {
 
      private void init(){
          mMyAdapter = new MyAdapter(FriendsActivity.this,MainActivity.mFriendInfoList,
-                     true, MyAdapterConstant.DEFAULT);
+                     true);
          mFLv = (ListView) findViewById(R.id.f_lv);  /*定义一个动态数组*/
          mFLv.setAdapter(mMyAdapter);
      }
@@ -154,5 +149,4 @@ public class FriendsActivity extends AppCompatActivity {
             mMyAdapter.notifyDataSetChanged();
         }
     }
-
 }

@@ -1,10 +1,17 @@
 package com.cunteng008.track.activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.telephony.SmsMessage;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -37,13 +44,19 @@ import com.cunteng008.track.constant.Constant;
 import com.cunteng008.track.constant.FileName;
 import com.cunteng008.track.model.PersonalInfo;
 import com.cunteng008.track.util.File;
+import com.cunteng008.track.util.myTools;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.cunteng008.track.util.AES.decrypt;
 import static com.cunteng008.track.util.AES.encrypt;
+import static com.cunteng008.track.util.DES.decryptDES;
 import static com.cunteng008.track.util.DES.encryptDES;
+import static com.cunteng008.track.util.myTools.analyzeReceivedMassage;
+import static com.cunteng008.track.util.myTools.verifyLatLon;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -60,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean mIsFirstLoc = true;
 
     //布局中的控件
-    ToggleButton mRefreshBtn;
+    Button mRefreshBtn;
     Button mLocateBtn;
     Button mFriendsBtn;
     Button mEenemiesBtn;
@@ -73,43 +86,70 @@ public class MainActivity extends AppCompatActivity {
     //我的位置
    public static BDLocation mMyLocation = new BDLocation();
 
+    //动态广播
+    private IntentFilter mReceiveFilter;
+    private MessageReceiver mMessageReceiver;
+    private AlarmReceiver mAlarmreceiver ;
+    private IntentFilter mAlarmFilter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
-        mAnim = AnimationUtils.loadAnimation(this, R.anim.rotate_indefinitely);
-        mImageviewSweep = (ImageView) findViewById(R.id.imageview_sweep);
-        mRefreshBtn = (ToggleButton) findViewById(R.id.refresh_btn);
+        mRefreshBtn = (Button) findViewById(R.id.refresh_btn);
         mRefreshBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(mRefreshBtn.isChecked()){
+                if(mFriendInfoList.size()==0 && mEnemyInfoList.size()==0){
+                    Toast.makeText(MainActivity.this,"您没有朋友或敌人",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                mAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate_indefinitely);
+                mImageviewSweep = (ImageView) findViewById(R.id.imageview_sweep);
+                //开始转动
+                mImageviewSweep.startAnimation(mAnim);
+
+                mReceiveFilter = new IntentFilter();
+                mReceiveFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
+                mMessageReceiver = new MessageReceiver();
+                registerReceiver(mMessageReceiver,mReceiveFilter);
+                mAlarmreceiver = new AlarmReceiver();
+                mAlarmFilter = new IntentFilter();
+                mAlarmFilter.addAction(Constant.ALARM_ACTION );
+                registerReceiver(mAlarmreceiver,mAlarmFilter);
+
+                mBaiduMap.clear();
+
                     String msgText =Constant.ASK_LOCATION;
+                /*
+                    //加密信息
                     try {
                         msgText = encryptDES("12345678",msgText);
                     }catch (Exception e){
                         return;
-                    }
-                    //开始转动
-                    mImageviewSweep.startAnimation(mAnim);
+                    }  */
+
+
                     for(PersonalInfo info:mFriendInfoList){
                         mySendTextMessage(info.getNum(),msgText);
                     }
                     for(PersonalInfo info:mEnemyInfoList){
                         mySendTextMessage(info.getNum(),msgText);
                     }
-
                     Toast.makeText(MainActivity.this,"完成短信发送",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    mImageviewSweep.setCropToPadding(true);
-                    Toast.makeText(MainActivity.this,"结束刷新,显示位置",Toast.LENGTH_SHORT).show();
-                    //清空地图
-                    mBaiduMap.clear();
-                    addAllOverlay(mFriendInfoList,mEnemyInfoList);
-                }
+
+                // 30秒后取消注册短信广播接收器
+                //Android中常用的一种系统级别的提示服务
+                AlarmManager alarmmanager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                long starttime = SystemClock.elapsedRealtime() + 1000 * 30;
+                Intent intent = new Intent(Constant.ALARM_ACTION);
+                PendingIntent pendingintent = PendingIntent.getBroadcast(
+                        MainActivity.this, 0, intent, 0);
+                alarmmanager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                        starttime, pendingintent);
             }
         });
 
@@ -142,6 +182,9 @@ public class MainActivity extends AppCompatActivity {
         init();
         mLocClient.registerLocationListener(myListener);
         mLocClient.start();
+        // 禁止地图所有手势操作
+        mBaiduMap.getUiSettings().setAllGesturesEnabled(false);
+
     }
 
     public static void setTextMessage(){
@@ -215,8 +258,8 @@ public class MainActivity extends AppCompatActivity {
 
             if(mIsFirstLoc){
                 setMeToCenter(location);
-                addAllOverlay(mFriendInfoList,mEnemyInfoList);
                 mIsFirstLoc = false;
+                addAllOverlay(mFriendInfoList,mEnemyInfoList);
             }
         }
         public void onReceivePoi(BDLocation poiLocation) {
@@ -228,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
                 location.getLongitude());
         MapStatus.Builder builder = new MapStatus.Builder();
         //图层设置为当前值
-        builder.target(ll).zoom(mBaiduMap.getMapStatus().zoom);
+        builder.target(ll).zoom(22);
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
     }
 
@@ -364,7 +407,6 @@ public class MainActivity extends AppCompatActivity {
         mMapView.onResume();
         super.onResume();
     }
-
     @Override
     protected void onDestroy() {
         //销毁前将数据储存
@@ -376,5 +418,93 @@ public class MainActivity extends AppCompatActivity {
         mBaiduMap.setMyLocationEnabled(false);
         mMapView.onDestroy();
         super.onDestroy();
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent){
+            Bundle bundle = intent.getExtras();
+            Object[] pdus = (Object[]) bundle.get("pdus");  //提取短信消息
+            SmsMessage[] messages = new SmsMessage[pdus.length];
+            for(int i = 0;i<messages.length;i++){
+                messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
+            }
+            String address = messages[0].getOriginatingAddress();  //获取发送方号码
+            String fullMessage = "";
+            for(SmsMessage message : messages){
+                fullMessage += message.getMessageBody();  //获取短信内容
+            }
+            //解密
+            /*
+            try {
+                //种子为12345678
+                fullMessage = decryptDES("12345678",fullMessage);
+            }catch (Exception e){
+                return;
+            } */
+
+            if(!verifyLatLon(fullMessage)){
+                return;
+            }
+
+            int j=0;
+            for(PersonalInfo info:MainActivity.mFriendInfoList){
+                if(info.getNum().equals(address)){
+
+                    String[] strOfLocation = analyzeReceivedMassage(fullMessage);
+                    double lon;
+                    double lat;
+                    try {
+                        lon = Double.parseDouble(strOfLocation[0]);
+                        lat = Double.parseDouble(strOfLocation[1]);
+                        //设置保留小数点位数
+                        lon = myTools.ReservedDecimalResult(lon,4);
+                        lat = myTools.ReservedDecimalResult(lat,4);
+                    }catch (Exception e){
+                        return;
+                    }
+                    info.setLatitude(lat);
+                    info.setLongitude(lon);
+                    addOverlay(info,Constant.FRIEND);
+                    MainActivity.mFriendInfoList.set(j,info);
+                    return;
+                }
+                j++;
+            }
+
+            j=0;
+            for(PersonalInfo info:MainActivity.mEnemyInfoList){
+                if(info.getNum().equals(address)){
+                    //若收到经纬度，则执行
+                    String[] strOfLocation = analyzeReceivedMassage(fullMessage);
+                    double lon=0;
+                    double lat=0;
+                    try {
+                        lon = Double.parseDouble(strOfLocation[0]);
+                        lat = Double.parseDouble(strOfLocation[1]);
+                        lon = myTools.ReservedDecimalResult(lon,4);
+                        lat = myTools.ReservedDecimalResult(lat,4);
+                    }catch (Exception e){
+                        return;
+                    }
+                    info.setLatitude(lat);
+                    info.setLongitude(lon);
+                    addOverlay(info,Constant.ENEMY);
+                    MainActivity.mEnemyInfoList.set(j,info);
+                    return;
+                }
+                j++;
+            }
+        }
+    }
+
+    class AlarmReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            context.unregisterReceiver(mMessageReceiver);
+            context.unregisterReceiver(mAlarmreceiver);
+           mImageviewSweep.clearAnimation();
+            Toast.makeText(MainActivity.this, "扫描结束", Toast.LENGTH_SHORT).show();
+        }
     }
 }

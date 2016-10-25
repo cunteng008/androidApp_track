@@ -29,4 +29,19 @@ public class myTools {
         boolean result = matcher.matches();
         return result;
     }
+
+    //解析短信,返回lon，lat两个字符串
+    public static String[] analyzeReceivedMassage(String text) {
+        String temp = text ;
+        //取得斜杠的位置
+        int loc = temp.indexOf('/');
+        //得到Latitude(纬度)的字符串
+        String lat = temp.substring(loc+1,temp.length());
+        //取得Longitude(经度)的字符串
+        String lon = temp.substring(0,loc);
+        String[] strOfLoction =new String[2];
+        strOfLoction[0] = lon;
+        strOfLoction[1] = lat;
+        return strOfLoction;
+    }
 }

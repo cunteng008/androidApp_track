@@ -13,4 +13,8 @@ public class Constant {
     public final static String EDIT = "Edit";
     public final static String FRIEND = "friend";
     public final static String ENEMY = "enemy";
- }
+
+    // 询问短信常量与广播常量
+    public final static String ALARM_ACTION = "com.cunteng008.track.ALARM_ACTION";
+
+}
