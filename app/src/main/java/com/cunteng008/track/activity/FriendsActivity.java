@@ -19,6 +19,8 @@ import com.cunteng008.track.constant.MyAdapterConstant;
 import com.cunteng008.track.model.AddDialog;
 import com.cunteng008.track.model.PersonalInfo;
 
+import static com.cunteng008.track.util.myTools.isExit;
+
 public class FriendsActivity extends AppCompatActivity {
 
     private MyAdapter mMyAdapter;
@@ -125,7 +127,6 @@ public class FriendsActivity extends AppCompatActivity {
                 p.setNum(num);
                 p.setLatitude(-1);
                 p.setLongitude(-1);
-                //若之前mFriendList == null，程序会崩溃，长度等于0不等于null
                 MainActivity.mFriendInfoList.add(p);
                 mMyAdapter.notifyDataSetChanged();
                 mAddDialog.dismiss();

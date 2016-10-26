@@ -1,4 +1,4 @@
-#Tue Oct 25 14:19:49 CST 2016
+#Wed Oct 26 09:39:46 CST 2016
 base.0=D\:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
 renamed.0=classes.dex
 file.0=D\:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex

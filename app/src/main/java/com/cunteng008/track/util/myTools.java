@@ -1,6 +1,9 @@
 package com.cunteng008.track.util;
 
+import com.cunteng008.track.model.PersonalInfo;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,5 +46,13 @@ public class myTools {
         strOfLoction[0] = lon;
         strOfLoction[1] = lat;
         return strOfLoction;
+    }
+    public static boolean isExit(String num, ArrayList<PersonalInfo> infoList){
+        for(PersonalInfo info:infoList){
+            if(num.equals(info.getName())){
+                return true;
+            }
+        }
+        return false;
     }
 }

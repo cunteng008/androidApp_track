@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         mLocClient.registerLocationListener(myListener);
         mLocClient.start();
         // 禁止地图所有手势操作
-        mBaiduMap.getUiSettings().setAllGesturesEnabled(false);
+        //mBaiduMap.getUiSettings().setAllGesturesEnabled(false);
 
     }
 
@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
                 location.getLongitude());
         MapStatus.Builder builder = new MapStatus.Builder();
         //图层设置为当前值
-        builder.target(ll).zoom(22);
+        builder.target(ll).zoom(mBaiduMap.getMapStatus().zoom);
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
     }
 

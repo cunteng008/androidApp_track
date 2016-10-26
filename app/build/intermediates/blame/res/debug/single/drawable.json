@@ -8,12 +8,12 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\dialog_ok_def.xml"
     },
     {
-        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\button_locate_def.xml",
-        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\button_locate_def.xml"
-    },
-    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\button_refresh.png",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\button_refresh.png"
+    },
+    {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\button_locate_def.xml",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\button_locate_def.xml"
     },
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_menu_overflow_material.xml",
@@ -164,12 +164,12 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\dialog_close.png"
     },
     {
-        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_track_material.xml",
-        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_seekbar_track_material.xml"
-    },
-    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\enemy_edit_button_bg.9.png",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\enemy_edit_button_bg.9.png"
+    },
+    {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_track_material.xml",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_seekbar_track_material.xml"
     },
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_clear_material.xml",
@@ -240,12 +240,12 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\friends_list_item_background.png"
     },
     {
-        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_radio_material.xml",
-        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_btn_radio_material.xml"
-    },
-    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\friend_delete_icon.png",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\friend_delete_icon.png"
+    },
+    {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_radio_material.xml",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_btn_radio_material.xml"
     },
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_voice_search_api_material.xml",
