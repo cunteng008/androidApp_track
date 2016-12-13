@@ -4,15 +4,10 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:background="@drawable/view_bg0">
 
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/bmapView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="false"
-        android:enabled="true"
-        android:apiKey="mh84H6rtwH48FntGcCGxszgEsQ6Pk4LY" />
+
 
     <LinearLayout
         android:id="@+id/header"
@@ -20,6 +15,7 @@
         android:layout_height="60dp"
         android:background="#0f0f0f"
         android:layout_alignParentTop="true">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -38,29 +34,67 @@
         android:layout_below="@id/header"
         android:layout_marginBottom="60dp">
         <LinearLayout
-            android:paddingTop="50dp"
-            android:layout_height="360dp"
-            android:layout_width="match_parent">
-            <ImageView
-                android:id="@+id/imageview_sweep"
-                android:layout_marginLeft ="50dp"
-                android:layout_marginTop ="60dp"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:src="@drawable/radar_sweep"/>
+            android:paddingTop="0dp"
+            android:layout_height="320dp"
+            android:layout_width="match_parent"
+            android:layout_centerInParent="true">
+            <com.baidu.mapapi.map.MapView
+                android:id="@+id/bmapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:enabled="true"
+                android:apiKey="mh84H6rtwH48FntGcCGxszgEsQ6Pk4LY" />
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="10dp"
-            android:background="@drawable/centre_radar_original">
+            android:paddingTop="0dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/centre_radar_top"
+                android:layout_alignParentTop="true"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:src="@drawable/radar_center_picture" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:src="@drawable/centre_radar3" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:weightSum="2">
+                    <ImageView
+                        android:id="@+id/imageview_sweep"
+                        android:layout_marginRight="75dp"
+                        android:layout_marginLeft ="0dp"
+                        android:layout_marginTop ="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/radar_sweep"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/centre_radar_bottom"
+                android:layout_alignParentBottom="true"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="10dp"
-            android:background="@drawable/centre_radar_back">
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
             <Button android:id="@+id/locate_btn"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"

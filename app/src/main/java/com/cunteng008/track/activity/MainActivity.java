@@ -106,12 +106,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,"您没有朋友或敌人",Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 mAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate_indefinitely);
                 mImageviewSweep = (ImageView) findViewById(R.id.imageview_sweep);
                 //开始转动
                 mImageviewSweep.startAnimation(mAnim);
-
                 mReceiveFilter = new IntentFilter();
                 mReceiveFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
                 mMessageReceiver = new MessageReceiver();
@@ -144,10 +142,11 @@ public class MainActivity extends AppCompatActivity {
                 // 30秒后取消注册短信广播接收器
                 //Android中常用的一种系统级别的提示服务
                 AlarmManager alarmmanager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                long starttime = SystemClock.elapsedRealtime() + 1000 * 30;
+                long starttime = SystemClock.elapsedRealtime() + 1000 * 60;
                 Intent intent = new Intent(Constant.ALARM_ACTION);
                 PendingIntent pendingintent = PendingIntent.getBroadcast(
                         MainActivity.this, 0, intent, 0);
+
                 alarmmanager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                         starttime, pendingintent);
             }

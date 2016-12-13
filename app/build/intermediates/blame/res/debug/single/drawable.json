@@ -24,6 +24,10 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
     },
     {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\centre_radar3.png",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\centre_radar3.png"
+    },
+    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_dark.xml",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_list_selector_holo_dark.xml"
     },
@@ -56,12 +60,12 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_cab_background_internal_bg.xml"
     },
     {
-        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_vector_test.xml",
-        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_vector_test.xml"
-    },
-    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\enemy_icon.png",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\enemy_icon.png"
+    },
+    {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_vector_test.xml",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_vector_test.xml"
     },
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_close_def.xml",
@@ -164,12 +168,12 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\dialog_close.png"
     },
     {
-        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\enemy_edit_button_bg.9.png",
-        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\enemy_edit_button_bg.9.png"
-    },
-    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_track_material.xml",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_seekbar_track_material.xml"
+    },
+    {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\enemy_edit_button_bg.9.png",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\enemy_edit_button_bg.9.png"
     },
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_clear_material.xml",
@@ -204,6 +208,10 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\button_footer_background.png"
     },
     {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\centre_radar_bottom.png",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\centre_radar_bottom.png"
+    },
+    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\delete.png",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\delete.png"
     },
@@ -218,6 +226,10 @@
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_go_search_api_material.xml",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_ic_go_search_api_material.xml"
+    },
+    {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\centre_radar2.png",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\centre_radar2.png"
     },
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_dark.xml",
@@ -260,8 +272,16 @@
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\button_refresh_on.png"
     },
     {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\radar_center_picture.png",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\radar_center_picture.png"
+    },
+    {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_ok.png",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\dialog_ok.png"
+    },
+    {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\centre_radar_top.png",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\centre_radar_top.png"
     },
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_material.xml",
@@ -278,6 +298,10 @@
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_edit_text_material.xml",
         "source": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\centre_radar4.png",
+        "source": "D:\\Mingjing\\Android\\project2\\track\\app\\src\\main\\res\\drawable\\centre_radar4.png"
     },
     {
         "merged": "D:\\Mingjing\\Android\\project2\\track\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_tab_indicator_material.xml",

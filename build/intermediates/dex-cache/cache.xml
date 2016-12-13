@@ -12,6 +12,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="D:\Mingjing\Appdata\local\android\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="D:\Mingjing\Android\project2\track\app\build\intermediates\pre-dexed\debug\support-annotations-24.2.1_4077fe9beb4dfe1dc0aa0865cbdf8b0db44163e5.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="D:\Mingjing\Android\project2\track\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -25,7 +34,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="b263d3cd7654d9d3bf445aacbbac2fc8ec46a0ac">
+        sha1="8144ddb1128f3bf164f6f01352abdec225248c74">
         <dex dex="D:\Mingjing\Android\project2\track\app\build\intermediates\pre-dexed\debug\instant-run_4e0ee0d41575514c443534139018eca9168e833e.jar" />
     </item>
     <item
@@ -111,15 +120,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\CMJ\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
-        <dex dex="D:\Mingjing\Android\project2\track\app\build\intermediates\pre-dexed\debug\support-annotations-24.2.1_a42bfaba3558290defd0ccbc7a12ba741a3ff0fd.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="D:\Mingjing\Android\project2\track\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -151,7 +151,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="503653cd1dcff3d0d08ef45b2a943aa4377a2c64">
+        sha1="f6b50dab95c40a8f90cfd03a52df008f45ae6054">
         <dex dex="D:\Mingjing\Android\project2\track\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_cd11000ea92ebe43479245920d358ce70d653f3d.jar" />
     </item>
     <item
